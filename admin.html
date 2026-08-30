@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Miguel & Susana</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
+
+    /* ── Variables ── */
+    :root {
+      --sage:       #6B7A4E;
+      --sage-light: #8A9A6A;
+      --sage-pale:  #C5CDB5;
+      --gold:       #B5874A;
+      --cream:      #F5F0E8;
+      --cream-dark: #EDE8DF;
+      --ink:        #3A3A2E;
+      --white:      #FFFFFF;
+      --danger:     #C0392B;
+      --success:    #4A7C59;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body:    'Montserrat', sans-serif;
+      --radius:     12px;
+      --shadow:     0 4px 24px rgba(107,122,78,0.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--cream);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: var(--white);
+      border-bottom: 1px solid var(--sage-pale);
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(107,122,78,0.07);
+    }
+
+    .header__brand {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--sage);
+      letter-spacing: 0.06em;
+    }
+
+    .header__brand span {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .header__meta {
+      font-size: 0.72rem;
+      color: var(--sage-light);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-align: right;
+    }
+
+    /* ── Layout ── */
+    .main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+    }
+
+    /* ── Stats bar ── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .stat-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .stat-card__number {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 500;
+      color: var(--sage);
+      line-height: 1;
+    }
+
+    .stat-card__label {
+      font-size: 0.68rem;
+      color: var(--sage-light);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .card__header {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--cream-dark);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card__title {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--sage);
+      letter-spacing: 0.06em;
+    }
+
+    .card__body {
+      padding: 24px;
+    }
+
+    /* ── Formulario agregar invitado ── */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 10px;
+      align-items: end;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--sage-light);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .form-group input,
+    .form-group select {
+      border: 1.5px solid var(--sage-pale);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      color: var(--ink);
+      background: var(--cream);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--sage);
+      background: var(--white);
+    }
+
+    /* ── Botones ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn--primary {
+      background: var(--sage);
+      color: var(--white);
+    }
+    .btn--primary:hover { background: #5a6840; transform: translateY(-1px); }
+
+    .btn--gold {
+      background: var(--gold);
+      color: var(--white);
+    }
+    .btn--gold:hover { background: #9e7340; transform: translateY(-1px); }
+
+    .btn--outline {
+      background: transparent;
+      border: 1.5px solid var(--sage-pale);
+      color: var(--sage);
+    }
+    .btn--outline:hover { border-color: var(--sage); background: var(--cream); }
+
+    .btn--danger {
+      background: transparent;
+      border: none;
+      color: #bbb;
+      padding: 6px 8px;
+    }
+    .btn--danger:hover { color: var(--danger); }
+
+    .btn--icon {
+      padding: 8px 10px;
+      border-radius: 7px;
+    }
+
+    /* ── Tabla de invitados ── */
+    .guests-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 160px;
+      border: 1.5px solid var(--sage-pale);
+      border-radius: 8px;
+      padding: 9px 14px;
+      font-family: var(--font-body);
+      font-size: 0.83rem;
+      color: var(--ink);
+      background: var(--cream);
+      outline: none;
+    }
+    .search-input:focus { border-color: var(--sage); background: var(--white); }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 16px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.83rem;
+    }
+
+    thead th {
+      text-align: left;
+      padding: 10px 14px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sage-light);
+      border-bottom: 1.5px solid var(--cream-dark);
+      background: var(--cream);
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--cream-dark);
+      transition: background 0.15s;
+    }
+    tbody tr:hover { background: #faf8f4; }
+    tbody tr:last-child { border-bottom: none; }
+
+    tbody td {
+      padding: 12px 14px;
+      vertical-align: middle;
+      color: var(--ink);
+    }
+
+    .td-name {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--sage);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+    }
+
+    .badge--seats {
+      background: var(--cream-dark);
+      color: var(--sage);
+    }
+
+    /* ── Link generado ── */
+    .link-cell {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .link-text {
+      font-size: 0.72rem;
+      color: var(--sage-light);
+      font-family: monospace;
+      background: var(--cream);
+      border: 1px solid var(--sage-pale);
+      border-radius: 5px;
+      padding: 4px 8px;
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      cursor: default;
+    }
+
+    .copy-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--sage-light);
+      font-size: 0.85rem;
+      padding: 4px 6px;
+      border-radius: 5px;
+      transition: all 0.2s;
+    }
+    .copy-btn:hover { color: var(--sage); background: var(--cream-dark); }
+    .copy-btn.copied { color: var(--success); }
+
+    /* ── Toast ── */
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--ink);
+      color: var(--white);
+      padding: 12px 24px;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      z-index: 999;
+      transition: transform 0.3s ease;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ── Empty state ── */
+    .empty-state {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--sage-pale);
+    }
+
+    .empty-state i {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .empty-state p {
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+    }
+
+    /* ── Export section ── */
+    .export-bar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      .stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+      }
+      .stat-card { padding: 12px; }
+      .stat-card__number { font-size: 1.6rem; }
+      .header { flex-direction: column; align-items: flex-start; gap: 4px; }
+      .link-text { max-width: 120px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header__brand">
+      Miguel <span>&</span> Susana
+    </div>
+    <div class="header__meta">
+      Admin · Invitaciones<br>
+      <span id="headerDate"></span>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Stats -->
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-card__number" id="statTotal">0</div>
+        <div class="stat-card__label">Invitados</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__number" id="statPases">0</div>
+        <div class="stat-card__label">Pases totales</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__number" id="statLinks">0</div>
+        <div class="stat-card__label">Links generados</div>
+      </div>
+    </div>
+
+    <!-- Agregar invitado -->
+    <div class="card">
+      <div class="card__header">
+        <span class="card__title">Agregar invitado</span>
+      </div>
+      <div class="card__body">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="inputName">Nombre del invitado</label>
+            <input type="text" id="inputName" placeholder="Ej: Familia González"
+                   autocomplete="off" />
+          </div>
+          <div class="form-group">
+            <label for="inputSeats">Pases</label>
+            <select id="inputSeats">
+              <option value="1">1</option>
+              <option value="2" selected>2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+          </div>
+          <button class="btn btn--primary" onclick="addGuest()">
+            <i class="fa-solid fa-plus"></i> Agregar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lista de invitados -->
+    <div class="card">
+      <div class="card__header">
+        <span class="card__title">Lista de invitados</span>
+        <div class="guests-toolbar">
+          <input class="search-input" type="text" id="searchInput"
+                 placeholder="Buscar invitado..."
+                 oninput="renderTable()" />
+          <button class="btn btn--outline btn--icon" onclick="exportCSV()" title="Exportar CSV">
+            <i class="fa-solid fa-file-csv"></i>
+          </button>
+          <button class="btn btn--outline btn--icon" onclick="copyAllLinks()" title="Copiar todos los links">
+            <i class="fa-solid fa-copy"></i>
+          </button>
+        </div>
+      </div>
+      <div class="card__body" style="padding: 0;">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Pases</th>
+                <th>Link personalizado</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="guestTableBody">
+              <!-- filas dinámicas -->
+            </tbody>
+          </table>
+          <div id="emptyState" class="empty-state" style="display:none;">
+            <i class="fa-regular fa-envelope"></i>
+            <p>Aún no hay invitados. ¡Agregá el primero!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Configuración del link base -->
+    <div class="card">
+      <div class="card__header">
+        <span class="card__title">Configuración</span>
+      </div>
+      <div class="card__body">
+        <div class="form-group">
+          <label for="baseUrl">URL base de la invitación</label>
+          <input type="text" id="baseUrl"
+                 placeholder="https://tuusuario.github.io/wedding-miguel-susana/"
+                 oninput="saveConfig(); renderTable()" />
+        </div>
+        <p style="font-size:0.72rem; color:var(--sage-light); margin-top:8px; letter-spacing:0.04em;">
+          Esta URL se usará para generar los links personalizados de cada invitado.
+        </p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    /* ══════════════════════════════
+       ESTADO — localStorage
+    ══════════════════════════════ */
+    const STORAGE_KEY = 'cpl_guests_ms';
+    const CONFIG_KEY  = 'cpl_config_ms';
+
+    function loadGuests() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+      catch { return []; }
+    }
+
+    function saveGuests(guests) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(guests));
+    }
+
+    function loadConfig() {
+      try { return JSON.parse(localStorage.getItem(CONFIG_KEY)) || {}; }
+      catch { return {}; }
+    }
+
+    function saveConfig() {
+      const config = { baseUrl: document.getElementById('baseUrl').value.trim() };
+      localStorage.setItem(CONFIG_KEY, JSON.stringify(config));
+    }
+
+    /* ══════════════════════════════
+       INIT
+    ══════════════════════════════ */
+    document.addEventListener('DOMContentLoaded', () => {
+      // Fecha en header
+      document.getElementById('headerDate').textContent =
+        new Date().toLocaleDateString('es-SV', { day:'2-digit', month:'short', year:'numeric' });
+
+      // Cargar config
+      const cfg = loadConfig();
+      if (cfg.baseUrl) document.getElementById('baseUrl').value = cfg.baseUrl;
+
+      // Enter en el input nombre
+      document.getElementById('inputName').addEventListener('keydown', e => {
+        if (e.key === 'Enter') addGuest();
+      });
+
+      renderTable();
+    });
+
+    /* ══════════════════════════════
+       GENERAR LINK
+    ══════════════════════════════ */
+    function buildLink(guest) {
+      const base = document.getElementById('baseUrl').value.trim()
+        || window.location.href.replace('admin.html', 'index.html');
+
+      const url = new URL(base.endsWith('/') ? base + 'index.html' : base);
+      url.searchParams.set('invitado', guest.name);
+      url.searchParams.set('cantidad', guest.seats);
+      url.searchParams.set('id', guest.id);
+      return url.toString();
+    }
+
+    /* ══════════════════════════════
+       AGREGAR INVITADO
+    ══════════════════════════════ */
+    function addGuest() {
+      const nameInput  = document.getElementById('inputName');
+      const seatsInput = document.getElementById('inputSeats');
+      const name = nameInput.value.trim();
+
+      if (!name) {
+        nameInput.focus();
+        showToast('Por favor ingresa un nombre.');
+        return;
+      }
+
+      const guests = loadGuests();
+
+      // Verificar duplicado
+      if (guests.some(g => g.name.toLowerCase() === name.toLowerCase())) {
+        showToast('Ya existe un invitado con ese nombre.');
+        return;
+      }
+
+      const guest = {
+        id:    Date.now(),
+        name:  name,
+        seats: parseInt(seatsInput.value),
+        createdAt: new Date().toISOString()
+      };
+
+      guests.push(guest);
+      saveGuests(guests);
+
+      nameInput.value = '';
+      seatsInput.value = '2';
+      nameInput.focus();
+
+      renderTable();
+      showToast(`✓ ${name} agregado correctamente.`);
+    }
+
+    /* ══════════════════════════════
+       ELIMINAR INVITADO
+    ══════════════════════════════ */
+    function deleteGuest(id) {
+      const guests = loadGuests().filter(g => g.id !== id);
+      saveGuests(guests);
+      renderTable();
+      showToast('Invitado eliminado.');
+    }
+
+    /* ══════════════════════════════
+       EDITAR PASES
+    ══════════════════════════════ */
+    function updateSeats(id, seats) {
+      const guests = loadGuests().map(g =>
+        g.id === id ? { ...g, seats: parseInt(seats) } : g
+      );
+      saveGuests(guests);
+      renderTable();
+    }
+
+    /* ══════════════════════════════
+       RENDER TABLA
+    ══════════════════════════════ */
+    function renderTable() {
+      const guests  = loadGuests();
+      const query   = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = query
+        ? guests.filter(g => g.name.toLowerCase().includes(query))
+        : guests;
+
+      const tbody = document.getElementById('guestTableBody');
+      const empty = document.getElementById('emptyState');
+
+      // Stats
+      document.getElementById('statTotal').textContent = guests.length;
+      document.getElementById('statPases').textContent = guests.reduce((s, g) => s + g.seats, 0);
+      document.getElementById('statLinks').textContent = guests.length;
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+      }
+
+      empty.style.display = 'none';
+
+      tbody.innerHTML = filtered.map((guest, i) => {
+        const link = buildLink(guest);
+        const shortLink = link.length > 55 ? link.substring(0, 52) + '...' : link;
+
+        // Opciones de pases
+        const seatsOptions = [1,2,3,4,5,6].map(n =>
+          `<option value="${n}" ${guest.seats === n ? 'selected' : ''}>${n}</option>`
+        ).join('');
+
+        return `
+          <tr>
+            <td style="color:var(--sage-pale); font-size:0.75rem;">${i + 1}</td>
+            <td class="td-name">${escapeHtml(guest.name)}</td>
+            <td>
+              <select class="badge badge--seats"
+                style="border:none; background:var(--cream-dark); color:var(--sage);
+                       font-family:var(--font-body); font-size:0.75rem; cursor:pointer;
+                       padding:3px 8px; border-radius:20px; outline:none;"
+                onchange="updateSeats(${guest.id}, this.value)">
+                ${seatsOptions}
+              </select>
+            </td>
+            <td>
+              <div class="link-cell">
+                <span class="link-text" title="${escapeHtml(link)}">${escapeHtml(shortLink)}</span>
+                <button class="copy-btn" onclick="copyLink(this, '${escapeHtml(link)}')"
+                        title="Copiar link">
+                  <i class="fa-regular fa-copy"></i>
+                </button>
+                <a href="${escapeHtml(link)}" target="_blank"
+                   style="color:var(--sage-light); font-size:0.8rem; text-decoration:none;"
+                   title="Abrir invitación">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+              </div>
+            </td>
+            <td>
+              <button class="btn--danger" onclick="deleteGuest(${guest.id})"
+                      title="Eliminar invitado">
+                <i class="fa-regular fa-trash-can"></i>
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    /* ══════════════════════════════
+       COPIAR LINK
+    ══════════════════════════════ */
+    function copyLink(btn, link) {
+      navigator.clipboard.writeText(link).then(() => {
+        btn.innerHTML = '<i class="fa-solid fa-check"></i>';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.innerHTML = '<i class="fa-regular fa-copy"></i>';
+          btn.classList.remove('copied');
+        }, 2000);
+        showToast('¡Link copiado!');
+      });
+    }
+
+    /* ══════════════════════════════
+       COPIAR TODOS LOS LINKS
+    ══════════════════════════════ */
+    function copyAllLinks() {
+      const guests = loadGuests();
+      if (!guests.length) { showToast('No hay invitados aún.'); return; }
+
+      const text = guests.map(g =>
+        `${g.name} (${g.seats} pase${g.seats > 1 ? 's' : ''})\n${buildLink(g)}`
+      ).join('\n\n');
+
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(`✓ ${guests.length} links copiados al portapapeles.`);
+      });
+    }
+
+    /* ══════════════════════════════
+       EXPORTAR CSV
+    ══════════════════════════════ */
+    function exportCSV() {
+      const guests = loadGuests();
+      if (!guests.length) { showToast('No hay invitados para exportar.'); return; }
+
+      const rows = [
+        ['#', 'Nombre', 'Pases', 'Link', 'Fecha agregado'],
+        ...guests.map((g, i) => [
+          i + 1,
+          `"${g.name}"`,
+          g.seats,
+          `"${buildLink(g)}"`,
+          new Date(g.createdAt).toLocaleDateString('es-SV')
+        ])
+      ];
+
+      const csv = rows.map(r => r.join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      a.href     = url;
+      a.download = 'invitados-miguel-susana.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('CSV exportado correctamente.');
+    }
+
+    /* ══════════════════════════════
+       TOAST
+    ══════════════════════════════ */
+    let toastTimer;
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
+    }
+
+    /* ══════════════════════════════
+       UTILS
+    ══════════════════════════════ */
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+  </script>
+
+</body>
+</html>
