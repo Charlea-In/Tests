@@ -286,22 +286,26 @@
       text-transform: uppercase;
       margin-top: 28px;
     }
-    /* Intro photo con efecto papel cortado */
+    /* Intro photo — PNG sin fondo, visible completo */
     .intro__photo-wrap {
       position: relative;
       max-width: 520px;
       margin: 28px auto 0;
-      filter: drop-shadow(0 10px 28px rgba(0,0,0,0.14));
+      background: transparent;
+      filter: none;
     }
     .intro__photo {
       display: block;
       width: 100%;
       height: auto;
-      aspect-ratio: 4 / 5;
-      object-fit: cover;
-      object-position: center top;
-      background: #ddd;
-      border-radius: 4px;
+      max-height: 72vh;
+      max-width: 100%;
+      object-fit: contain;
+      object-position: center;
+      background: transparent;
+      border-radius: 0;
+      filter: drop-shadow(0 10px 24px rgba(0,0,0,0.12));
+      mix-blend-mode: multiply;
     }
     .countdown__wrap {
       position: absolute;
