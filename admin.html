@@ -8,12 +8,13 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
 
-    /* ── Variables ── */
+    /* ── Variables — acorde invitación ── */
     :root {
       --sage:       #6B7A4E;
       --sage-light: #8A9A6A;
       --sage-pale:  #C5CDB5;
       --gold:       #B5874A;
+      --gold-light: #D4A96A;
       --cream:      #F5F0E8;
       --cream-dark: #EDE8DF;
       --ink:        #3A3A2E;
@@ -21,7 +22,7 @@
       --danger:     #C0392B;
       --success:    #4A7C59;
       --font-display: 'Cormorant Garamond', Georgia, serif;
-      --font-body:    'Montserrat', sans-serif;
+      --font-body:    'Cormorant Garamond', Georgia, serif;
       --radius:     12px;
       --shadow:     0 4px 24px rgba(107,122,78,0.10);
     }
@@ -29,10 +30,37 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: var(--font-body);
-      background: var(--cream);
+      font-family: var(--font-display);
+      background-color: var(--cream);
+      background-image: url('assets/texture-linen.webp');
+      background-size: 600px auto;
+      background-repeat: repeat;
       color: var(--ink);
       min-height: 100vh;
+    }
+    /* Hero admin — solo foto hero-couple sin texto */
+    .admin-hero {
+      position: relative;
+      height: clamp(280px, 42vh, 460px);
+      overflow: hidden;
+      border-bottom: 1px solid #E8DCC8;
+      background: var(--cream-dark);
+      line-height: 0;
+    }
+    .admin-hero__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+      transform: scale(1.05);
+      animation: adminKenBurns 14s ease-out forwards;
+    }
+    @keyframes adminKenBurns { from { transform: scale(1.05); } to { transform: scale(1.00); } }
+    .admin-hero__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(245,240,232,0.05) 0%, rgba(245,240,232,0.0) 40%, rgba(245,240,232,0.55) 75%, rgba(245,240,232,0.88) 100%);
     }
 
     /* ── Header ── */
@@ -179,42 +207,51 @@
       background: var(--white);
     }
 
-    /* ── Botones ── */
+    /* ── Botones — textura invitación ── */
     .btn {
       display: inline-flex;
       align-items: center;
       gap: 7px;
       padding: 10px 20px;
-      border-radius: 8px;
-      font-family: var(--font-body);
+      border-radius: 999px;
+      font-family: var(--font-display);
       font-size: 0.78rem;
       font-weight: 500;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       cursor: pointer;
-      border: none;
-      transition: all 0.2s ease;
+      border: 1.5px solid transparent;
+      transition: all 0.25s cubic-bezier(0.25,0.46,0.45,0.94);
       white-space: nowrap;
+      box-shadow: 0 2px 10px rgba(107,122,78,0.12);
     }
 
     .btn--primary {
-      background: var(--sage);
+      background-color: var(--sage);
+      background-image: url('assets/texture-linen.webp');
+      background-size: 400px auto;
+      background-blend-mode: overlay;
       color: var(--white);
+      border-color: var(--sage);
     }
-    .btn--primary:hover { background: #5a6840; transform: translateY(-1px); }
+    .btn--primary:hover { background-color: #5a6840; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(107,122,78,0.22); }
 
     .btn--gold {
-      background: var(--gold);
+      background-color: var(--gold);
+      background-image: url('assets/texture-linen.webp');
+      background-size: 400px auto;
+      background-blend-mode: overlay;
       color: var(--white);
+      border-color: var(--gold);
     }
-    .btn--gold:hover { background: #9e7340; transform: translateY(-1px); }
+    .btn--gold:hover { background-color: #9e7340; transform: translateY(-1px); }
 
     .btn--outline {
-      background: transparent;
+      background: var(--white);
       border: 1.5px solid var(--sage-pale);
       color: var(--sage);
     }
-    .btn--outline:hover { border-color: var(--sage); background: var(--cream); }
+    .btn--outline:hover { border-color: var(--sage); background: var(--cream-dark); transform: translateY(-1px); }
 
     .btn--danger {
       background: transparent;
@@ -392,6 +429,31 @@
       align-items: center;
     }
 
+    /* ── Confirmados + Mesas ── */
+    .confirmados-list { display:flex; flex-direction:column; gap:8px; }
+    .confirmado-item {
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      padding:10px 14px; background:var(--cream); border:1px solid #E8DCC8; border-radius:10px;
+      cursor:grab; transition: all 0.2s;
+    }
+    .confirmado-item:active { cursor:grabbing; }
+    .confirmado-item.dragging { opacity:0.45; transform: scale(0.98); }
+    .confirmado-item__name { font-family:var(--font-display); font-weight:500; color:var(--sage); }
+    .confirmado-item__seats { font-size:0.72rem; color:var(--sage-light); letter-spacing:0.08em; }
+    .mesa { background:var(--white); border:1.5px solid #E8DCC8; border-radius:12px; overflow:hidden; box-shadow:var(--shadow); }
+    .mesa__header { padding:14px 16px; border-bottom:1px solid var(--cream-dark); display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; background:var(--cream); }
+    .mesa__title { font-family:var(--font-display); font-weight:500; color:var(--sage); letter-spacing:0.04em; }
+    .mesa__cap { font-size:0.72rem; color:var(--sage-light); letter-spacing:0.08em; display:flex; align-items:center; gap:6px; }
+    .mesa__cap input { width:52px; border:1.5px solid var(--sage-pale); border-radius:6px; padding:4px 6px; font-family:var(--font-display); text-align:center; background:var(--white); }
+    .mesa__body { padding:16px; min-height:90px; }
+    .mesa__dropzone { border:2px dashed var(--sage-pale); border-radius:10px; padding:16px; text-align:center; color:var(--sage-light); font-size:0.78rem; transition:all 0.2s; background:var(--cream); }
+    .mesa__dropzone.drag-over { border-color:var(--gold); background:var(--cream-dark); color:var(--sage); transform: scale(1.01); }
+    .mesa__lista { list-style:none; display:flex; flex-direction:column; gap:6px; margin-top:12px; }
+    .mesa__lista li { display:flex; align-items:center; justify-content:space-between; padding:8px 10px; background:var(--cream-dark); border-radius:8px; font-size:0.85rem; }
+    .mesa__lista li button { background:none; border:none; color:var(--sage-light); cursor:pointer; padding:2px 6px; }
+    .mesa__lista li button:hover { color:var(--danger); }
+    .mesa__vacio { border:1.5px dashed var(--sage-pale); background:transparent !important; color:var(--sage-pale) !important; justify-content:center; font-style:italic; font-size:0.78rem; padding:8px; border-radius:8px; display:flex; }
+
     /* ── Responsive ── */
     @media (max-width: 600px) {
       .form-row {
@@ -410,6 +472,12 @@
 </head>
 
 <body>
+
+  <!-- Hero — solo foto sin texto -->
+  <div class="admin-hero" aria-hidden="true">
+    <img class="admin-hero__img" src="assets/hero-couple.webp" alt="" onerror="this.style.display='none'" />
+    <div class="admin-hero__overlay"></div>
+  </div>
 
   <!-- Header -->
   <header class="header">
@@ -494,6 +562,7 @@
                 <th>#</th>
                 <th>Nombre</th>
                 <th>Pases</th>
+                <th>Estado</th>
                 <th>Link personalizado</th>
                 <th></th>
               </tr>
@@ -528,6 +597,40 @@
       </div>
     </div>
 
+    <!-- Confirmados -->
+    <div class="card" id="confirmadosCard">
+      <div class="card__header">
+        <span class="card__title">Confirmados</span>
+        <span style="font-size:0.72rem; color:var(--sage-light); letter-spacing:0.08em;"><span id="statConfirmados">0</span> confirmados · <span id="statNo">0</span> no asistirán</span>
+      </div>
+      <div class="card__body">
+        <div id="confirmadosList" class="confirmados-list"></div>
+        <div id="confirmadosEmpty" class="empty-state" style="display:none; padding:24px;">
+          <i class="fa-regular fa-circle-check"></i>
+          <p>Nadie ha confirmado aún — cambia el estado en la tabla o espera RSVP</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mesas -->
+    <div class="card" id="mesasCard">
+      <div class="card__header" style="flex-wrap:wrap; gap:12px;">
+        <span class="card__title">Mesas</span>
+        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+          <input type="text" id="mesaName" placeholder="Mesa 1" style="border:1.5px solid var(--sage-pale); border-radius:8px; padding:8px 10px; font-family:var(--font-display); font-size:0.85rem; width:120px; background:var(--cream);" />
+          <label style="font-size:0.70rem; color:var(--sage-light); letter-spacing:0.08em; text-transform:uppercase;">Capacidad <input type="number" id="mesaCap" min="1" max="12" value="6" style="border:1.5px solid var(--sage-pale); border-radius:8px; padding:6px 8px; font-family:var(--font-display); font-size:0.85rem; width:64px; background:var(--cream); margin-left:4px;" /></label>
+          <button class="btn btn--primary" onclick="addMesa()"><i class="fa-solid fa-plus"></i> Crear mesa</button>
+        </div>
+      </div>
+      <div class="card__body">
+        <div id="mesasGrid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap:16px;"></div>
+        <div id="mesasEmpty" class="empty-state" style="padding:24px;">
+          <i class="fa-solid fa-chair"></i>
+          <p>Crea tu primera mesa y arrastra confirmados hacia ella</p>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <!-- Toast -->
@@ -539,14 +642,26 @@
     ══════════════════════════════ */
     const STORAGE_KEY = 'cpl_guests_ms';
     const CONFIG_KEY  = 'cpl_config_ms';
+    const MESAS_KEY   = 'cpl_mesas_ms';
 
     function loadGuests() {
-      try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
-      catch { return []; }
+      try {
+        const raw = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        // migración: asegurar status y mesaId
+        return raw.map(g => ({ status: 'pendiente', mesaId: null, ...g }));
+      } catch { return []; }
     }
 
     function saveGuests(guests) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(guests));
+    }
+
+    function loadMesas() {
+      try { return JSON.parse(localStorage.getItem(MESAS_KEY)) || []; }
+      catch { return []; }
+    }
+    function saveMesas(mesas) {
+      localStorage.setItem(MESAS_KEY, JSON.stringify(mesas));
     }
 
     function loadConfig() {
@@ -619,6 +734,8 @@
         id:    Date.now(),
         name:  name,
         seats: parseInt(seatsInput.value),
+        status: 'pendiente',
+        mesaId: null,
         createdAt: new Date().toISOString()
       };
 
@@ -639,6 +756,9 @@
     function deleteGuest(id) {
       const guests = loadGuests().filter(g => g.id !== id);
       saveGuests(guests);
+      // limpiar de mesas
+      const mesas = loadMesas().map(m => ({ ...m, invitados: m.invitados.filter(gid => gid !== id) }));
+      saveMesas(mesas);
       renderTable();
       showToast('Invitado eliminado.');
     }
@@ -650,6 +770,21 @@
       const guests = loadGuests().map(g =>
         g.id === id ? { ...g, seats: parseInt(seats) } : g
       );
+      saveGuests(guests);
+      renderTable();
+    }
+
+    /* ══════════════════════════════
+       EDITAR ESTADO
+    ══════════════════════════════ */
+    function updateStatus(id, status) {
+      const guests = loadGuests().map(g => g.id === id ? { ...g, status } : g);
+      // si ya no va, sacarlo de su mesa
+      if (status !== 'si') {
+        guests.forEach(g => { if (g.id === id) g.mesaId = null; });
+        const mesas = loadMesas().map(m => ({ ...m, invitados: m.invitados.filter(gid => gid !== id) }));
+        saveMesas(mesas);
+      }
       saveGuests(guests);
       renderTable();
     }
@@ -671,60 +806,240 @@
       document.getElementById('statTotal').textContent = guests.length;
       document.getElementById('statPases').textContent = guests.reduce((s, g) => s + g.seats, 0);
       document.getElementById('statLinks').textContent = guests.length;
+      const confirmados = guests.filter(g => g.status === 'si').length;
+      const noVan = guests.filter(g => g.status === 'no').length;
+      const elConfirm = document.getElementById('statConfirmados');
+      if (elConfirm) elConfirm.textContent = confirmados;
+      const elNo = document.getElementById('statNo');
+      if (elNo) elNo.textContent = noVan;
 
       if (filtered.length === 0) {
         tbody.innerHTML = '';
         empty.style.display = 'block';
-        return;
+      } else {
+        empty.style.display = 'none';
+        tbody.innerHTML = filtered.map((guest, i) => {
+          const link = buildLink(guest);
+          const shortLink = link.length > 55 ? link.substring(0, 52) + '...' : link;
+          const seatsOptions = [1,2,3,4,5,6].map(n => `<option value="${n}" ${guest.seats === n ? 'selected' : ''}>${n}</option>`).join('');
+          const statusOptions = [
+            {v:'pendiente', l:'Pendiente'},
+            {v:'si', l:'Confirmado'},
+            {v:'no', l:'No asistirá'}
+          ].map(o => `<option value="${o.v}" ${guest.status===o.v?'selected':''}>${o.l}</option>`).join('');
+          const statusColor = guest.status==='si' ? 'var(--success)' : guest.status==='no' ? 'var(--danger)' : 'var(--sage-light)';
+          return `
+            <tr draggable="${guest.status==='si' ? 'true' : 'false'}" ondragstart="onGuestDragStart(event, ${guest.id})" style="${guest.status==='si' ? 'cursor:grab;' : ''}">
+              <td style="color:var(--sage-pale); font-size:0.75rem;">${i + 1}</td>
+              <td class="td-name">${escapeHtml(guest.name)}</td>
+              <td>
+                <select class="badge badge--seats"
+                  style="border:none; background:var(--cream-dark); color:var(--sage);
+                         font-family:var(--font-display); font-size:0.75rem; cursor:pointer;
+                         padding:3px 8px; border-radius:20px; outline:none;"
+                  onchange="updateSeats(${guest.id}, this.value)">
+                  ${seatsOptions}
+                </select>
+              </td>
+              <td>
+                <select onchange="updateStatus(${guest.id}, this.value)" style="border:1.5px solid #E8DCC8; border-radius:8px; padding:4px 8px; font-family:var(--font-display); font-size:0.75rem; color:${statusColor}; background:var(--white); cursor:pointer;">
+                  ${statusOptions}
+                </select>
+              </td>
+              <td>
+                <div class="link-cell">
+                  <span class="link-text" title="${escapeHtml(link)}">${escapeHtml(shortLink)}</span>
+                  <button class="copy-btn" onclick="copyLink(this, '${escapeHtml(link)}')"
+                          title="Copiar link">
+                    <i class="fa-regular fa-copy"></i>
+                  </button>
+                  <a href="${escapeHtml(link)}" target="_blank"
+                     style="color:var(--sage-light); font-size:0.8rem; text-decoration:none;"
+                     title="Abrir invitación">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                  </a>
+                </div>
+              </td>
+              <td>
+                <button class="btn--danger" onclick="deleteGuest(${guest.id})"
+                        title="Eliminar invitado">
+                  <i class="fa-regular fa-trash-can"></i>
+                </button>
+              </td>
+            </tr>
+          `;
+        }).join('');
       }
 
+      renderConfirmados();
+      renderMesas();
+    }
+
+    /* ══════════════════════════════
+       CONFIRMADOS
+    ══════════════════════════════ */
+    function renderConfirmados() {
+      const guests = loadGuests().filter(g => g.status === 'si');
+      const list = document.getElementById('confirmadosList');
+      const empty = document.getElementById('confirmadosEmpty');
+      if (!list || !empty) return;
+      document.getElementById('statConfirmados').textContent = guests.length;
+      const noEl = document.getElementById('statNo');
+      if (noEl) noEl.textContent = loadGuests().filter(g => g.status === 'no').length;
+      if (guests.length === 0) {
+        list.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+      }
       empty.style.display = 'none';
-
-      tbody.innerHTML = filtered.map((guest, i) => {
-        const link = buildLink(guest);
-        const shortLink = link.length > 55 ? link.substring(0, 52) + '...' : link;
-
-        // Opciones de pases
-        const seatsOptions = [1,2,3,4,5,6].map(n =>
-          `<option value="${n}" ${guest.seats === n ? 'selected' : ''}>${n}</option>`
-        ).join('');
-
+      list.innerHTML = guests.map(g => {
+        const mesa = loadMesas().find(m => m.invitados.includes(g.id));
         return `
-          <tr>
-            <td style="color:var(--sage-pale); font-size:0.75rem;">${i + 1}</td>
-            <td class="td-name">${escapeHtml(guest.name)}</td>
-            <td>
-              <select class="badge badge--seats"
-                style="border:none; background:var(--cream-dark); color:var(--sage);
-                       font-family:var(--font-body); font-size:0.75rem; cursor:pointer;
-                       padding:3px 8px; border-radius:20px; outline:none;"
-                onchange="updateSeats(${guest.id}, this.value)">
-                ${seatsOptions}
-              </select>
-            </td>
-            <td>
-              <div class="link-cell">
-                <span class="link-text" title="${escapeHtml(link)}">${escapeHtml(shortLink)}</span>
-                <button class="copy-btn" onclick="copyLink(this, '${escapeHtml(link)}')"
-                        title="Copiar link">
-                  <i class="fa-regular fa-copy"></i>
-                </button>
-                <a href="${escapeHtml(link)}" target="_blank"
-                   style="color:var(--sage-light); font-size:0.8rem; text-decoration:none;"
-                   title="Abrir invitación">
-                  <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                </a>
-              </div>
-            </td>
-            <td>
-              <button class="btn--danger" onclick="deleteGuest(${guest.id})"
-                      title="Eliminar invitado">
-                <i class="fa-regular fa-trash-can"></i>
-              </button>
-            </td>
-          </tr>
+          <div class="confirmado-item" draggable="true" ondragstart="onGuestDragStart(event, ${g.id})" data-id="${g.id}">
+            <div style="flex:1; min-width:0;">
+              <div class="confirmado-item__name">${escapeHtml(g.name)}</div>
+              <div class="confirmado-item__seats">${g.seats} pase${g.seats>1?'s':''} ${mesa ? '· '+escapeHtml(mesa.nombre) : '· sin mesa'}</div>
+            </div>
+            <span style="font-size:0.70rem; color:var(--sage-light); white-space:nowrap;"><i class="fa-solid fa-grip"></i> arrastrar</span>
+          </div>
         `;
       }).join('');
+    }
+
+    /* ══════════════════════════════
+       MESAS
+    ══════════════════════════════ */
+    function addMesa() {
+      const nameInput = document.getElementById('mesaName');
+      const capInput = document.getElementById('mesaCap');
+      const nombre = nameInput.value.trim() || `Mesa ${loadMesas().length + 1}`;
+      const capacidad = Math.max(1, Math.min(12, parseInt(capInput.value) || 6));
+      const mesas = loadMesas();
+      mesas.push({ id: Date.now(), nombre, capacidad, invitados: [] });
+      saveMesas(mesas);
+      nameInput.value = '';
+      capInput.value = '6';
+      renderMesas();
+      showToast(`✓ ${nombre} creada (${capacidad} lugares)`);
+    }
+    function deleteMesa(id) {
+      let mesas = loadMesas().filter(m => m.id !== id);
+      saveMesas(mesas);
+      const guests = loadGuests().map(g => g.mesaId === id ? { ...g, mesaId: null } : g);
+      saveGuests(guests);
+      renderMesas();
+      renderConfirmados();
+      renderTable();
+      showToast('Mesa eliminada');
+    }
+    function updateMesaCap(id, cap) {
+      const mesas = loadMesas().map(m => m.id === id ? { ...m, capacidad: Math.max(1, Math.min(12, parseInt(cap)||1)) } : m);
+      const mesa = mesas.find(m => m.id === id);
+      if (mesa && mesa.invitados.length > mesa.capacidad) {
+        showToast(`Capacidad menor que ocupados (${mesa.invitados.length}/${mesa.capacidad})`);
+      }
+      saveMesas(mesas);
+      renderMesas();
+    }
+    function updateMesaName(id, nombre) {
+      const mesas = loadMesas().map(m => m.id === id ? { ...m, nombre: nombre.trim() || m.nombre } : m);
+      saveMesas(mesas);
+      renderMesas();
+    }
+    function removeFromMesa(mesaId, guestId) {
+      const mesas = loadMesas().map(m => m.id === mesaId ? { ...m, invitados: m.invitados.filter(gid => gid !== guestId) } : m);
+      saveMesas(mesas);
+      const guests = loadGuests().map(g => g.id === guestId ? { ...g, mesaId: null } : g);
+      saveGuests(guests);
+      renderMesas();
+      renderConfirmados();
+    }
+    function renderMesas() {
+      const mesas = loadMesas();
+      const guests = loadGuests();
+      const grid = document.getElementById('mesasGrid');
+      const empty = document.getElementById('mesasEmpty');
+      if (!grid || !empty) return;
+      if (mesas.length === 0) {
+        grid.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+      }
+      empty.style.display = 'none';
+      grid.innerHTML = mesas.map(mesa => {
+        const ocupados = mesa.invitados.length;
+        const vacios = Math.max(0, mesa.capacidad - ocupados);
+        const invitadosHtml = mesa.invitados.map(gid => {
+          const g = guests.find(x => x.id === gid);
+          if (!g) return '';
+          return `<li><span><strong>${escapeHtml(g.name)}</strong> <small style="color:var(--sage-light)">· ${g.seats} pases</small></span> <button onclick="removeFromMesa(${mesa.id}, ${g.id})" title="Quitar"><i class="fa-solid fa-xmark"></i></button></li>`;
+        }).join('');
+        const vaciosHtml = Array(vacios).fill(0).map(() => `<li class="mesa__vacio"><i class="fa-regular fa-circle"></i> Vacío</li>`).join('');
+        return `
+          <div class="mesa" data-mesa-id="${mesa.id}">
+            <div class="mesa__header">
+              <input class="mesa__title" value="${escapeHtml(mesa.nombre)}" onchange="updateMesaName(${mesa.id}, this.value)" style="border:1.5px solid transparent; background:transparent; font-family:var(--font-display); font-size:1rem; font-weight:500; color:var(--sage); width:120px; border-radius:6px; padding:4px 6px;" onfocus="this.style.borderColor='var(--sage-pale)'; this.style.background='var(--white)'" onblur="this.style.borderColor='transparent'; this.style.background='transparent'" />
+              <span class="mesa__cap">${ocupados}/${mesa.capacidad} <input type="number" min="1" max="12" value="${mesa.capacidad}" onchange="updateMesaCap(${mesa.id}, this.value)" title="Capacidad editable" /> <button onclick="deleteMesa(${mesa.id})" style="background:none; border:none; color:var(--sage-light); cursor:pointer; margin-left:4px;"><i class="fa-regular fa-trash-can"></i></button></span>
+            </div>
+            <div class="mesa__body">
+              <div class="mesa__dropzone" ondragover="onMesaDragOver(event)" ondragleave="onMesaDragLeave(event)" ondrop="onMesaDrop(event, ${mesa.id})">
+                <i class="fa-solid fa-arrow-down"></i> Arrastra confirmados aquí
+              </div>
+              <ul class="mesa__lista">
+                ${invitadosHtml}
+                ${vaciosHtml}
+              </ul>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+    let draggedGuestId = null;
+    function onGuestDragStart(e, guestId) {
+      draggedGuestId = guestId;
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', String(guestId));
+      e.target.classList.add('dragging');
+      setTimeout(() => e.target.classList.remove('dragging'), 0);
+    }
+    function onMesaDragOver(e) {
+      e.preventDefault();
+      e.currentTarget.classList.add('drag-over');
+      e.dataTransfer.dropEffect = 'move';
+    }
+    function onMesaDragLeave(e) {
+      e.currentTarget.classList.remove('drag-over');
+    }
+    function onMesaDrop(e, mesaId) {
+      e.preventDefault();
+      e.currentTarget.classList.remove('drag-over');
+      const guestId = draggedGuestId || parseInt(e.dataTransfer.getData('text/plain'));
+      if (!guestId) return;
+      const guest = loadGuests().find(g => g.id === guestId);
+      if (!guest || guest.status !== 'si') {
+        showToast('Solo confirmados pueden ir a mesa');
+        return;
+      }
+      const mesas = loadMesas();
+      const target = mesas.find(m => m.id === mesaId);
+      if (!target) return;
+      if (target.invitados.includes(guestId)) {
+        showToast('Ya está en esa mesa');
+        return;
+      }
+      if (target.invitados.length >= target.capacidad) {
+        showToast(`Mesa llena (${target.capacidad} lugares)`);
+        return;
+      }
+      mesas.forEach(m => m.invitados = m.invitados.filter(gid => gid !== guestId));
+      target.invitados.push(guestId);
+      saveMesas(mesas);
+      const guests = loadGuests().map(g => g.id === guestId ? { ...g, mesaId } : g);
+      saveGuests(guests);
+      renderMesas();
+      renderConfirmados();
+      showToast(`✓ ${guest.name} → ${target.nombre}`);
+      draggedGuestId = null;
     }
 
     /* ══════════════════════════════
