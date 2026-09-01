@@ -36,7 +36,7 @@
       --ink:         #3A3A2E;
       --white:       #FFFFFF;
       --font-display: 'Cormorant Garamond', Georgia, serif;
-      --font-body:    'Montserrat', sans-serif;
+      --font-body:    'Cormorant Garamond', Georgia, serif;
       --section-pad: clamp(60px, 10vw, 100px) clamp(24px, 6vw, 60px);
       --transition:  0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
@@ -47,13 +47,17 @@
     body {
       background-color: var(--cream);
       color: var(--ink);
-      font-family: var(--font-body);
-      font-weight: 300;
+      font-family: var(--font-display);
+      font-weight: 400;
       line-height: 1.7;
       overflow-x: hidden;
       max-width: 100vw;
       position: relative;
     }
+    /* Jerarquía Cormorant: títulos grande, subtítulos mediano, párrafos pequeño */
+    .section-title { font-size: clamp(2.2rem, 6vw, 3.6rem); font-weight: 500; }
+    .section-subtitle, .intro__label, .details__event-title { font-size: clamp(1.25rem, 4vw, 1.9rem); font-weight: 500; }
+    p, .intro__tagline, .details__event-place, .rules__item, .gifts__text, .ubicacion__detail, .dressCode__desc { font-size: 0.92rem; font-weight: 400; line-height: 1.65; }
     img { display: block; max-width: 100%; height: auto; }
 
     /* ============================================================
@@ -284,13 +288,13 @@
       color: #0A0A0A;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      margin-top: 28px;
+      margin-top: 14px;
     }
     /* Intro photo — PNG sin fondo, visible completo */
     .intro__photo-wrap {
       position: relative;
       max-width: 520px;
-      margin: 28px auto 0;
+      margin: 16px auto 0;
       background: transparent;
       filter: none;
     }
@@ -308,24 +312,26 @@
       mix-blend-mode: multiply;
     }
     .countdown__wrap {
-      position: absolute;
-      bottom: 18px;
-      left: 50%;
-      transform: translateX(-50%);
+      position: relative;
+      bottom: auto;
+      left: auto;
+      transform: none;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       white-space: nowrap;
+      margin-top: 16px;
     }
     .countdown__heading {
-      font-family: var(--font-body);
-      font-size: 0.72rem;
+      font-family: var(--font-display);
+      font-size: 1.05rem;
       font-weight: 600;
-      letter-spacing: 0.22em;
+      font-style: italic;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: #0A0A0A;
-      text-shadow: 0 1px 0 rgba(255,255,255,0.9), 0 1px 6px rgba(255,255,255,0.6);
+      color: var(--ink);
+      text-shadow: 0 1px 0 rgba(255,255,255,0.95), 0 2px 10px rgba(255,255,255,0.8);
       text-align: center;
     }
     .intro__countdown {
@@ -348,34 +354,35 @@
     }
     .countdown__num {
       font-family: var(--font-display);
-      font-size: clamp(2.7rem, 9.6vw, 3.84rem);
-      font-weight: 700;
-      color: #0A0A0A;
+      font-size: clamp(2.8rem, 9vw, 3.8rem);
+      font-weight: 600;
+      color: var(--ink);
       line-height: 1;
-      letter-spacing: 0.02em;
-      text-shadow: 0 1px 0 rgba(255,255,255,0.85), 0 2px 10px rgba(255,255,255,0.6);
+      letter-spacing: 0.04em;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.95), 0 2px 10px rgba(255,255,255,0.7);
     }
     .countdown__label {
-      font-family: var(--font-body);
-      font-size: 0.99rem;
-      font-weight: 600;
+      font-family: var(--font-display);
+      font-size: 0.84rem;
+      font-weight: 500;
+      font-style: italic;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: #0A0A0A;
+      color: var(--ink);
       margin-top: 4px;
       text-shadow: 0 1px 0 rgba(255,255,255,0.9);
     }
     .countdown__sep {
-      color: #0A0A0A;
-      font-weight: 400;
-      font-size: 2.1rem;
+      color: var(--sage-pale);
+      font-weight: 300;
+      font-size: 2.2rem;
       line-height: 1;
-      transform: translateY(-10px);
-      opacity: 0.9;
+      transform: translateY(-8px);
+      opacity: 0.6;
     }
     @media (max-width: 480px) {
-      .intro__photo-wrap { max-width: 92vw; margin-top: 22px; }
-      .countdown__wrap { bottom: 12px; gap: 4px; }
+      .intro__photo-wrap { max-width: 92vw; margin-top: 14px; }
+      .countdown__wrap { margin-top: 12px; gap: 6px; }
       .intro__countdown { gap: 6px; }
       .countdown__item { min-width: 48px; }
       .countdown__num { font-size: 2.1rem; }
@@ -387,12 +394,13 @@
     .player__hint {
       font-family: var(--font-display);
       font-style: italic;
-      font-size: clamp(0.95rem, 3.5vw, 1.15rem);
-      font-weight: 300;
-      color: var(--sage);
+      font-size: clamp(1.05rem, 3.5vw, 1.25rem);
+      font-weight: 500;
+      color: var(--ink);
       text-align: center;
-      margin-top: 44px;
+      margin-top: 32px;
       letter-spacing: 0.03em;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.9);
     }
     .player {
       display: flex;
@@ -487,9 +495,10 @@
       pointer-events: none;
     }
     .details__venue-illustration {
-      width: clamp(260px, 80vw, 460px);
-      margin: 0 auto 36px;
-      opacity: 0.85;
+      width: clamp(520px, 90vw, 720px);
+      max-width: 92%;
+      margin: 0 auto 24px;
+      opacity: 0.90;
     }
     .details__event { margin-bottom: 32px; }
     .details__event-title {
@@ -568,21 +577,21 @@
     }
     .ubicacion__detail i { color: var(--sage); width: 18px; flex-shrink: 0; }
     .ubicacion__actions {
-      margin-top: 28px;
+      margin-top: 16px;
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 10px;
       justify-content: center;
     }
     .ubicacion__btn {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 13px 22px;
-      border-radius: 40px;
-      font-size: 0.76rem;
+      gap: 6px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      font-size: 0.68rem;
       font-weight: 500;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.10em;
       text-transform: uppercase;
       text-decoration: none;
       cursor: pointer;
@@ -697,19 +706,60 @@
     .calendar-option small { font-size: 0.68rem; color: var(--sage-light); letter-spacing: 0.04em; }
     .calendar-option__arrow { color: var(--sage-pale); font-size: 0.85rem; flex-shrink: 0; }
     @media (max-width: 480px) {
-      .ubicacion__map-wrap iframe { height: 320px; }
-      .ubicacion__actions { flex-direction: column; align-items: stretch; max-width: 320px; margin-left: auto; margin-right: auto; }
-      .ubicacion__btn { justify-content: center; }
+      .ubicacion__map-wrap iframe { height: 280px; }
+      .ubicacion__actions { flex-direction: row; flex-wrap: nowrap; align-items: center; justify-content: center; max-width: none; margin-left: auto; margin-right: auto; gap: 6px; }
+      .ubicacion__btn { justify-content: center; flex: 1 1 0; min-width: 0; padding: 7px 8px; font-size: 0.58rem; gap: 4px; letter-spacing: 0.06em; white-space: nowrap; }
+      .ubicacion__btn i { font-size: 0.70rem; }
     }
 
     /* Ajuste espaciado Intro / Ubicación / Detalles */
-    #intro { padding-bottom: 36px; }
-    #ubicacion { padding-top: 32px; padding-bottom: 16px; }
-    #ubicacion .divider { margin: 10px auto; }
-    #ubicacion .ubicacion__map-wrap { margin-top: 16px; }
-    #detalles { padding-top: 16px; }
-    #detalles .divider { margin: 8px auto 6px; }
-    .details__venue-illustration { margin: 4px auto 16px; }
+    #intro { padding-bottom: 16px; }
+    #ubicacion { padding-top: 16px; padding-bottom: 0; }
+    #ubicacion .divider { margin: 4px auto; }
+    #ubicacion .ubicacion__map-wrap { margin-top: 10px; }
+    .ubicacion__details { margin-top: 10px; }
+    .ubicacion__actions { margin-top: 10px; margin-bottom: 0; }
+    #detalles { padding-top: 0; }
+    #detalles h2:first-of-type { margin-top: 0; padding-top: 0; }
+    .photo-duo { margin-top: 12px !important; }
+    #detalles .divider { margin: 6px auto 4px; }
+    .details__venue-illustration { margin: 4px auto 12px; }
+
+    /* Fotos duo entre Recepción y Agenda */
+    .photo-duo {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      max-width: 560px;
+      margin: 20px auto 16px;
+    }
+    .photo-duo__item {
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid #E8DCC8;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      background: var(--white);
+      line-height: 0;
+    }
+    .photo-duo__img {
+      width: 100%;
+      height: 440px;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    .photo-duo__item:hover .photo-duo__img { transform: scale(1.06); }
+    .photo-duo__item:nth-child(1) { animation: photoFloat 6s ease-in-out infinite; }
+    .photo-duo__item:nth-child(2) { animation: photoFloat 6s ease-in-out 1.5s infinite; }
+    @keyframes photoFloat {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+    @media (max-width: 480px) {
+      .photo-duo { gap: 8px; margin: 16px auto 12px; }
+      .photo-duo__img { height: 320px; }
+    }
 
     /* ============================================================
        4. AGENDA
@@ -833,19 +883,29 @@
        ============================================================ */
     .gifts { text-align: center; }
     .gifts__icon {
-      width: clamp(48px, 12vw, 70px);
-      margin: 0 auto 20px;
-      opacity: 0.6;
+      width: clamp(180px, 40vw, 320px);
+      margin: 16px auto;
+      opacity: 0.85;
     }
     .gifts__text {
       font-family: var(--font-display);
-      font-size: clamp(1rem, 3vw, 1.2rem);
+      font-size: clamp(1.05rem, 3vw, 1.25rem);
       font-style: italic;
-      font-weight: 300;
-      color: var(--sage-light);
-      max-width: 340px;
+      font-weight: 500;
+      color: var(--ink);
+      max-width: 360px;
       margin: 0 auto;
-      line-height: 1.8;
+      line-height: 1.7;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.9);
+    }
+    .gifts__line {
+      display: block;
+      width: 140px;
+      height: 2px;
+      margin: 16px auto;
+      background: linear-gradient(90deg, var(--sage-pale), var(--gold), var(--sage));
+      border-radius: 999px;
+      opacity: 0.90;
     }
 
     /* ============================================================
@@ -912,19 +972,19 @@
     }
     .rsvp__guest-box > * { position: relative; z-index: 1; }
 
-    /* Decoraciones laterales — más visibles */
+    /* Decoraciones laterales — doble tamaño */
     .deco { position: absolute; pointer-events: none; user-select: none; z-index: 0; }
-    .deco--intro { top: -14px; right: -22px; width: clamp(110px, 20vw, 170px); opacity: 0.68; transform: rotate(12deg); }
-    .deco--ubicacion { top: 10px; left: -18px; width: clamp(100px, 18vw, 150px); opacity: 0.72; transform: rotate(-16deg); }
-    .deco--detalles { top: 18px; right: -20px; width: clamp(90px, 16vw, 130px); opacity: 0.65; transform: rotate(8deg); }
-    .deco--dress { top: -10px; right: -14px; width: clamp(100px, 17vw, 140px); opacity: 0.7; transform: rotate(14deg); }
-    .deco--reglas { top: 8px; left: -16px; width: clamp(90px, 16vw, 130px); opacity: 0.62; transform: rotate(-10deg); }
-    .deco--sugerencias { top: 12px; right: -18px; width: clamp(90px, 15vw, 125px); opacity: 0.62; transform: rotate(10deg); }
-    .deco--gifts { top: -12px; left: -14px; width: clamp(100px, 17vw, 140px); opacity: 0.68; transform: rotate(-12deg); }
+    .deco--intro { top: -18px; right: -28px; width: clamp(220px, 40vw, 340px); opacity: 0.72; transform: rotate(12deg); }
+    .deco--ubicacion { top: 14px; left: -24px; width: clamp(200px, 36vw, 300px); opacity: 0.76; transform: rotate(-16deg); }
+    .deco--detalles { top: 22px; right: -26px; width: clamp(180px, 32vw, 260px); opacity: 0.70; transform: rotate(8deg); }
+    .deco--dress { top: -14px; right: -18px; width: clamp(200px, 34vw, 280px); opacity: 0.74; transform: rotate(14deg); }
+    .deco--reglas { top: 12px; left: -22px; width: clamp(180px, 32vw, 260px); opacity: 0.68; transform: rotate(-10deg); }
+    .deco--sugerencias { top: 16px; right: -24px; width: clamp(180px, 30vw, 250px); opacity: 0.68; transform: rotate(10deg); }
+    .deco--gifts { top: -16px; left: -18px; width: clamp(200px, 34vw, 280px); opacity: 0.72; transform: rotate(-12deg); }
     @media (max-width: 640px) {
-      .deco--intro { width: 110px; right: -12px; }
-      .deco--ubicacion { width: 95px; left: -10px; }
-      .deco--detalles { width: 90px; }
+      .deco--intro { width: 220px; right: -16px; }
+      .deco--ubicacion { width: 190px; left: -14px; }
+      .deco--detalles { width: 180px; }
       .rsvp__arbusto {
         width: clamp(140px, 48vw, 220px);
         max-width: 78%;
@@ -1335,6 +1395,16 @@
           Dirección placeholder, Ciudad
         </p>
       </div>
+
+      <div class="photo-duo reveal-group">
+        <div class="photo-duo__item reveal">
+          <img class="photo-duo__img" src="assets/hero-couple.webp" alt="Foto recuerdo 1" loading="lazy" onerror="this.src='assets/intro-couple.png'" />
+        </div>
+        <div class="photo-duo__item reveal">
+          <img class="photo-duo__img" src="assets/intro-couple.png" alt="Foto recuerdo 2" loading="lazy" onerror="this.src='assets/hero-couple.webp'" />
+        </div>
+      </div>
+
 <h2 id="agenda" class="section-title typewriter-block reveal">Agenda</h2>
 <div class="agenda__grid reveal-group">
 
@@ -1358,8 +1428,8 @@
             <p class="agenda__item-time">6:00 p.m.</p>
 <p class="agenda__item-label">Recepción</p>
           </div>
-          <div class="agenda__item reveal">
-            <img class="agenda__icon" src="assets/icon-champagne.webp" alt="Brindis" />
+          <div class="agenda__item reveal" style="min-height:160px;">
+            <img class="agenda__icon" src="assets/icon-champagne.webp" alt="Brindis" style="width:clamp(112px,28vw,160px); height:clamp(112px,28vw,160px);" />
           </div>
 
           <div class="agenda__item reveal">
@@ -1400,34 +1470,9 @@
        ══════════════════════════════════════════════ -->
   <section class="section section--texture" id="reglas">
     <img src="assets/Rama-eucalipto.png" alt="" class="deco deco--reglas" aria-hidden="true" />
-    <div class="section__inner">
-      <h2 class="section-title reveal" style="font-size: clamp(1.2rem, 4.5vw, 1.7rem);">Reglas<br>del Evento</h2>
-<ul class="rules__list reveal-group">
-        <li class="rules__item reveal">
-          <span class="rules__bullet"></span>
-          El código de vestimenta es elegante/formal.
-        </li>
-        <li class="rules__item reveal">
-          <span class="rules__bullet"></span>
-          Evita los colores blanco, ivory, crema o derivados en tu outfit,
-          esos colores los dejaremos esta ocasión exclusivamente para la Novia.
-        </li>
-        <li class="rules__item reveal">
-          <span class="rules__bullet"></span>
-          Asegúrate de llegar a tiempo, queremos que todos podamos disfrutar
-          del evento desde el comienzo.
-        </li>
-        <li class="rules__item reveal">
-          <span class="rules__bullet"></span>
-          Les pedimos amablemente que asistan únicamente la cantidad de personas
-          indicadas en la invitación.
-        </li>
-        <li class="rules__item reveal">
-          <span class="rules__bullet"></span>
-          Hemos seleccionado con cariño cada espacio para ud(s). Para que se
-          sientan cómodos y en el mejor ambiente. ¡Disfruten!
-        </li>
-      </ul>
+    <div class="section__inner" style="text-align:center;">
+      <img class="reveal" src="assets/Reglas.png" alt="Reglas del Evento" style="max-width:560px; width:92%; height:auto; margin:0 auto; display:block; border:none; border-radius:0; box-shadow:none; background:transparent; mix-blend-mode:multiply; filter:contrast(1.02);" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+      <p style="display:none; font-size:0.82rem; color:var(--sage-light); margin-top:16px;">Sube <code>assets/Reglas.png</code> para mostrar las reglas personalizadas.</p>
     </div>
   </section>
 
@@ -1437,21 +1482,9 @@
        ══════════════════════════════════════════════ -->
   <section class="section section--texture" id="sugerencias">
     <img src="assets/Rama-eucalipto-2.png" alt="" class="deco deco--sugerencias" aria-hidden="true" />
-    <div class="section__inner">
-      <h2 class="section-title reveal" style="font-size: clamp(1.2rem, 4.5vw, 1.7rem);">Sugerencias<br>de los Novios</h2>
-<ul class="rules__list reveal-group mt-32">
-        <li class="rules__item reveal">
-          <span class="rules__bullet"></span>
-          Si planeas disfrutar de bebidas alcohólicas durante la celebración,
-          les sugerimos que designen a un conductor sobrio para el regreso a casa.
-          De esta manera, todos podrán disfrutar de la fiesta con toda seguridad.
-        </li>
-        <li class="rules__item reveal">
-          <span class="rules__bullet"></span>
-          No olvides llevar tu cambio de zapatos a tenis o adecuados para jardín,
-          queremos que disfrutes nuestra boda al máximo y sobre todo, que estés cómodo/a.
-        </li>
-      </ul>
+    <div class="section__inner" style="text-align:center;">
+      <img class="reveal" src="assets/sugerencias.png" alt="Sugerencias de los Novios" style="max-width:560px; width:92%; height:auto; margin:0 auto; display:block; border:none; border-radius:0; box-shadow:none; background:transparent; mix-blend-mode:multiply; filter:contrast(1.02);" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+      <p style="display:none; font-size:0.82rem; color:var(--sage-light); margin-top:16px;">Sube <code>assets/sugerencias.png</code> para mostrar las sugerencias.</p>
     </div>
   </section>
 
@@ -1462,9 +1495,10 @@
   <section class="section section--texture gifts" id="regalos">
     <img src="assets/Rama-arbol.png" alt="" class="deco deco--gifts" aria-hidden="true" />
     <div class="section__inner reveal-group">
-      <img class="gifts__icon reveal" src="assets/sobre.png" alt="Sobre" style="width: clamp(90px, 22vw, 160px); height: auto;" onerror="this.onerror=null; this.src='assets/sobre.webp';" />
 <h2 class="section-title reveal" style="font-size: clamp(1.2rem, 4.5vw, 1.7rem);">Muestras<br>de Cariño</h2>
-<p class="gifts__text reveal mt-16">
+      <span class="gifts__line reveal" aria-hidden="true"></span>
+      <img class="gifts__icon reveal" src="assets/sobre.png" alt="Sobre" style="width: clamp(180px, 40vw, 320px); height: auto;" onerror="this.onerror=null; this.src='assets/sobre.webp';" />
+<p class="gifts__text reveal">
         Agradecemos sus muestras de cariño en regalo de sobre.
       </p>
     </div>
@@ -1472,17 +1506,17 @@
 
 
   <!-- ══════════════════════════════════════════════
-       9. RSVP
+       9. RSVP — PNG Confirma-footer + botón encima
        ══════════════════════════════════════════════ -->
-  <section class="section rsvp" id="rsvp">
-    <div class="section__inner reveal-group">
-<h2 class="section-title typewriter-block reveal">Confirma tu<br>Asistencia</h2>
-      <div class="rsvp__guest-box reveal">
-        <img src="assets/Arbusto.png" alt="" class="rsvp__arbusto" aria-hidden="true" />
-        <p class="rsvp__guest-name" id="guestName">Invitado</p>
-        <p class="rsvp__seats" id="guestSeats">— pases</p>
-        <a class="rsvp__btn" href="#" id="rsvpBtn">Confirmar asistencia</a>
+  <section class="section rsvp" id="rsvp" style="padding:0; background:var(--cream);">
+    <div class="rsvp__confirm-wrap reveal" style="position:relative; max-width:720px; margin:0 auto; line-height:0;">
+      <img src="assets/Confirma-footer.png" alt="Confirma tu asistencia" style="width:100%; height:auto; display:block; background:transparent; mix-blend-mode:multiply; filter:contrast(1.02);" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.background='var(--cream-dark)'; this.nextElementSibling.style.padding='48px 24px';" />
+      <div class="rsvp__confirm-overlay" style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; padding:0 16px 5%; gap:8px; text-align:center; pointer-events:none;">
+        <p class="rsvp__guest-name" id="guestName" style="pointer-events:auto; background:rgba(255,255,255,0.92); padding:6px 14px; border-radius:999px; box-shadow:0 2px 12px rgba(0,0,0,0.08); font-size:clamp(1rem,4vw,1.4rem); margin:0;">Invitado</p>
+        <p class="rsvp__seats" id="guestSeats" style="pointer-events:auto; background:rgba(255,255,255,0.82); padding:3px 10px; border-radius:999px; font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--sage); margin:0;">— pases</p>
+        <a class="rsvp__btn" href="#" id="rsvpBtn" style="pointer-events:auto; margin-top:8px;">Confirmar asistencia</a>
       </div>
+      <p class="reveal" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); background:var(--white); padding:12px 16px; border-radius:8px; border:1px solid #E8DCC8; font-size:0.82rem; color:var(--sage-light);">Sube <code>assets/Confirma-footer.png</code></p>
     </div>
   </section>
 
