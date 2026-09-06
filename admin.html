@@ -8,581 +8,485 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
 
+    /* ── Variables — acorde invitación ── */
     :root {
-      --sage:        #5A6B42;
-      --sage-light:  #7A8A6A;
-      --sage-pale:   #C5CDB5;
-      --gold:        #B5874A;
-      --gold-light:  #D4A96A;
-      --cream:       #F5F0E8;
-      --cream-dark:  #EDE8DF;
-      --ink:         #2E2E2E;
-      --ink-light:   #5A5A4A;
-      --white:       #FFFFFF;
-      --danger:      #B83232;
-      --danger-bg:   #FDF0F0;
-      --success:     #3A7A52;
-      --success-bg:  #F0F7F3;
-      --warning:     #B57A20;
-      --warning-bg:  #FDF6EC;
+      --sage:       #6B7A4E;
+      --sage-light: #8A9A6A;
+      --sage-pale:  #C5CDB5;
+      --gold:       #B5874A;
+      --gold-light: #D4A96A;
+      --cream:      #F5F0E8;
+      --cream-dark: #EDE8DF;
+      --ink:        #3A3A2E;
+      --white:      #FFFFFF;
+      --danger:     #C0392B;
+      --success:    #4A7C59;
       --font-display: 'Cormorant Garamond', Georgia, serif;
-      --font-ui:      'Montserrat', system-ui, sans-serif;
-      --radius:       10px;
-      --radius-lg:    16px;
-      --shadow-sm:    0 1px 4px rgba(0,0,0,0.07);
-      --shadow:       0 4px 20px rgba(90,107,66,0.10);
-      --shadow-lg:    0 8px 40px rgba(90,107,66,0.14);
-      --transition:   0.2s cubic-bezier(0.25,0.46,0.45,0.94);
+      --font-body:    'Cormorant Garamond', Georgia, serif;
+      --radius:     12px;
+      --shadow:     0 4px 24px rgba(107,122,78,0.10);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
 
     body {
-      font-family: var(--font-ui);
+      font-family: var(--font-display);
       background-color: var(--cream);
       background-image: url('assets/texture-linen.webp');
       background-size: 600px auto;
+      background-repeat: repeat;
       color: var(--ink);
       min-height: 100vh;
-      font-size: 0.84rem;
     }
-
-    /* ── Hero ── */
+    /* Hero admin — solo foto hero-couple sin texto */
     .admin-hero {
       position: relative;
-      height: clamp(180px, 28vh, 320px);
+      height: clamp(280px, 42vh, 460px);
       overflow: hidden;
+      border-bottom: 1px solid #E8DCC8;
       background: var(--cream-dark);
+      line-height: 0;
     }
     .admin-hero__img {
-      width: 100%; height: 100%;
-      object-fit: cover; object-position: center 30%;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
       display: block;
+      transform: scale(1.05);
+      animation: adminKenBurns 14s ease-out forwards;
     }
+    @keyframes adminKenBurns { from { transform: scale(1.05); } to { transform: scale(1.00); } }
     .admin-hero__overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to bottom,
-        rgba(245,240,232,0.0) 0%,
-        rgba(245,240,232,0.5) 70%,
-        rgba(245,240,232,0.95) 100%);
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(245,240,232,0.05) 0%, rgba(245,240,232,0.0) 40%, rgba(245,240,232,0.55) 75%, rgba(245,240,232,0.88) 100%);
     }
-    .admin-hero__label {
-      position: absolute; bottom: 20px; left: 50%;
-      transform: translateX(-50%);
-      font-family: var(--font-display);
-      font-size: clamp(1.5rem, 4vw, 2rem);
-      font-weight: 500; letter-spacing: 0.12em;
-      color: var(--ink); white-space: nowrap;
-      text-shadow: 0 1px 0 rgba(255,255,255,0.9);
-    }
-    .admin-hero__label span { color: var(--gold); font-style: italic; }
 
     /* ── Header ── */
     .header {
       background: var(--white);
       border-bottom: 1px solid var(--sage-pale);
-      padding: 14px 24px;
-      display: flex; align-items: center; justify-content: space-between;
-      position: sticky; top: 0; z-index: 200;
-      box-shadow: var(--shadow-sm);
-      gap: 12px;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(107,122,78,0.07);
     }
-    .header__left { display: flex; align-items: center; gap: 12px; }
-    .header__dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: var(--sage); flex-shrink: 0;
-    }
+
     .header__brand {
       font-family: var(--font-display);
-      font-size: 1.1rem; font-weight: 500;
-      color: var(--sage); letter-spacing: 0.06em;
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--sage);
+      letter-spacing: 0.06em;
     }
-    .header__brand em { color: var(--gold); font-style: italic; }
-    .header__pill {
-      background: var(--cream); border: 1px solid var(--sage-pale);
-      border-radius: 999px; padding: 3px 10px;
-      font-size: 0.68rem; color: var(--sage-light);
-      letter-spacing: 0.1em; text-transform: uppercase;
-      white-space: nowrap;
+
+    .header__brand span {
+      color: var(--gold);
+      font-style: italic;
     }
-    .header__actions { display: flex; align-items: center; gap: 8px; }
-    .header__date {
-      font-size: 0.70rem; color: var(--sage-light);
-      letter-spacing: 0.08em; text-align: right;
+
+    .header__meta {
+      font-size: 0.72rem;
+      color: var(--sage-light);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-align: right;
     }
 
     /* ── Layout ── */
-    .main { max-width: 960px; margin: 0 auto; padding: 28px 20px 80px; }
+    .main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+    }
 
-    /* ── Stats ── */
+    /* ── Stats bar ── */
     .stats {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 10px; margin-bottom: 24px;
-    }
-    .stat {
-      background: var(--white); border-radius: var(--radius);
-      padding: 16px 14px; box-shadow: var(--shadow-sm);
-      border: 1px solid transparent;
-      transition: border-color var(--transition);
-      position: relative; overflow: hidden;
-    }
-    .stat::before {
-      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
-      height: 3px; border-radius: 0 0 var(--radius) var(--radius);
-      background: var(--sage-pale);
-      transition: background var(--transition);
-    }
-    .stat--confirm::before { background: var(--success); }
-    .stat--no::before     { background: var(--danger); }
-    .stat--pend::before   { background: var(--warning); }
-    .stat--pases::before  { background: var(--gold); }
-    .stat__num {
-      font-family: var(--font-display);
-      font-size: 2rem; font-weight: 500;
-      color: var(--sage); line-height: 1;
-    }
-    .stat--confirm .stat__num { color: var(--success); }
-    .stat--no .stat__num      { color: var(--danger); }
-    .stat--pend .stat__num    { color: var(--warning); }
-    .stat--pases .stat__num   { color: var(--gold); }
-    .stat__label {
-      font-size: 0.62rem; color: var(--sage-light);
-      letter-spacing: 0.12em; text-transform: uppercase; margin-top: 4px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 28px;
     }
 
-    /* Barra de progreso confirmación */
-    .progress-wrap {
-      background: var(--white); border-radius: var(--radius);
-      padding: 14px 20px; margin-bottom: 24px;
-      box-shadow: var(--shadow-sm);
-      display: flex; align-items: center; gap: 16px;
+    .stat-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      box-shadow: var(--shadow);
+      text-align: center;
     }
-    .progress-label {
-      font-size: 0.70rem; color: var(--sage-light);
-      letter-spacing: 0.10em; text-transform: uppercase;
-      white-space: nowrap; flex-shrink: 0;
+
+    .stat-card__number {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 500;
+      color: var(--sage);
+      line-height: 1;
     }
-    .progress-bar {
-      flex: 1; height: 6px; background: var(--cream-dark);
-      border-radius: 999px; overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%; background: linear-gradient(90deg, var(--sage), var(--gold));
-      border-radius: 999px; transition: width 0.6s ease;
-      width: 0%;
-    }
-    .progress-pct {
-      font-family: var(--font-display); font-size: 1.1rem;
-      font-weight: 500; color: var(--sage); min-width: 3rem;
-      text-align: right;
+
+    .stat-card__label {
+      font-size: 0.68rem;
+      color: var(--sage-light);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-top: 4px;
     }
 
     /* ── Card ── */
     .card {
-      background: var(--white); border-radius: var(--radius-lg);
-      box-shadow: var(--shadow); margin-bottom: 20px; overflow: hidden;
-      border: 1px solid rgba(197,205,181,0.4);
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+      overflow: hidden;
     }
+
     .card__header {
-      padding: 16px 22px;
+      padding: 18px 24px;
       border-bottom: 1px solid var(--cream-dark);
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 12px; flex-wrap: wrap;
-      background: linear-gradient(to right, var(--cream), var(--white));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
+
     .card__title {
       font-family: var(--font-display);
-      font-size: 1.15rem; font-weight: 500;
-      color: var(--sage); letter-spacing: 0.06em;
-      display: flex; align-items: center; gap: 8px;
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--sage);
+      letter-spacing: 0.06em;
     }
-    .card__title i { font-size: 0.9rem; opacity: 0.7; }
-    .card__body { padding: 22px; }
-    .card__body--flush { padding: 0; }
 
-    /* ── Form ── */
+    .card__body {
+      padding: 24px;
+    }
+
+    /* ── Formulario agregar invitado ── */
     .form-row {
       display: grid;
-      grid-template-columns: 1fr 100px auto auto;
-      gap: 10px; align-items: end;
+      grid-template-columns: 1fr auto auto;
+      gap: 10px;
+      align-items: end;
     }
-    .form-group { display: flex; flex-direction: column; gap: 5px; }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
     .form-group label {
-      font-size: 0.66rem; font-weight: 600;
-      color: var(--sage-light); letter-spacing: 0.14em; text-transform: uppercase;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--sage-light);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
     }
+
     .form-group input,
-    .form-group select,
-    .form-group textarea {
-      border: 1.5px solid var(--sage-pale); border-radius: 8px;
-      padding: 9px 12px; font-family: var(--font-ui);
-      font-size: 0.83rem; color: var(--ink);
-      background: var(--cream); outline: none;
-      transition: border-color var(--transition), background var(--transition);
+    .form-group select {
+      border: 1.5px solid var(--sage-pale);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      color: var(--ink);
+      background: var(--cream);
+      outline: none;
+      transition: border-color 0.2s;
     }
+
     .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      border-color: var(--sage); background: var(--white);
-      box-shadow: 0 0 0 3px rgba(90,107,66,0.08);
+    .form-group select:focus {
+      border-color: var(--sage);
+      background: var(--white);
     }
-    .form-group textarea { resize: vertical; min-height: 60px; }
 
-    /* ── Botones ── */
+    /* ── Botones — textura invitación ── */
     .btn {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 9px 18px; border-radius: 999px;
-      font-family: var(--font-ui); font-size: 0.74rem;
-      font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
-      cursor: pointer; border: 1.5px solid transparent;
-      transition: all var(--transition); white-space: nowrap;
-      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: 1.5px solid transparent;
+      transition: all 0.25s cubic-bezier(0.25,0.46,0.45,0.94);
+      white-space: nowrap;
+      box-shadow: 0 2px 10px rgba(107,122,78,0.12);
     }
+
     .btn--primary {
-      background: var(--sage); color: var(--white); border-color: var(--sage);
-      box-shadow: 0 2px 10px rgba(90,107,66,0.22);
+      background-color: var(--sage);
+      background-image: url('assets/texture-linen.webp');
+      background-size: 400px auto;
+      background-blend-mode: overlay;
+      color: var(--white);
+      border-color: var(--sage);
     }
-    .btn--primary:hover { background: #4a5836; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(90,107,66,0.28); }
+    .btn--primary:hover { background-color: #5a6840; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(107,122,78,0.22); }
+
     .btn--gold {
-      background: var(--gold); color: var(--white); border-color: var(--gold);
-      box-shadow: 0 2px 10px rgba(181,135,74,0.22);
+      background-color: var(--gold);
+      background-image: url('assets/texture-linen.webp');
+      background-size: 400px auto;
+      background-blend-mode: overlay;
+      color: var(--white);
+      border-color: var(--gold);
     }
-    .btn--gold:hover { background: #9e7340; transform: translateY(-1px); }
+    .btn--gold:hover { background-color: #9e7340; transform: translateY(-1px); }
+
     .btn--outline {
-      background: var(--white); border-color: var(--sage-pale); color: var(--sage);
+      background: var(--white);
+      border: 1.5px solid var(--sage-pale);
+      color: var(--sage);
     }
-    .btn--outline:hover { border-color: var(--sage); background: var(--cream); transform: translateY(-1px); }
-    .btn--ghost {
-      background: transparent; border-color: transparent; color: var(--sage-light);
-      padding: 7px 10px;
-    }
-    .btn--ghost:hover { color: var(--sage); background: var(--cream-dark); border-radius: 8px; }
-    .btn--danger-ghost {
-      background: transparent; border: none; color: #ccc;
-      padding: 6px 8px; border-radius: 6px;
-    }
-    .btn--danger-ghost:hover { color: var(--danger); background: var(--danger-bg); }
-    .btn--sm { padding: 6px 12px; font-size: 0.68rem; }
-    .btn--icon { padding: 8px; border-radius: 8px; }
+    .btn--outline:hover { border-color: var(--sage); background: var(--cream-dark); transform: translateY(-1px); }
 
-    /* ── Toolbar ── */
-    .toolbar {
-      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    .btn--danger {
+      background: transparent;
+      border: none;
+      color: #bbb;
+      padding: 6px 8px;
     }
-    .toolbar__search {
-      flex: 1; min-width: 160px;
-      border: 1.5px solid var(--sage-pale); border-radius: 8px;
-      padding: 8px 12px; font-family: var(--font-ui);
-      font-size: 0.80rem; color: var(--ink);
-      background: var(--cream); outline: none;
-      transition: border-color var(--transition);
-    }
-    .toolbar__search:focus { border-color: var(--sage); background: var(--white); }
+    .btn--danger:hover { color: var(--danger); }
 
-    .filter-tabs {
-      display: flex; gap: 4px; background: var(--cream-dark);
-      border-radius: 8px; padding: 3px;
-    }
-    .filter-tab {
-      padding: 5px 12px; border-radius: 6px; border: none;
-      font-family: var(--font-ui); font-size: 0.68rem;
-      font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
-      cursor: pointer; color: var(--sage-light); background: transparent;
-      transition: all var(--transition);
-    }
-    .filter-tab.active {
-      background: var(--white); color: var(--sage);
-      box-shadow: var(--shadow-sm);
+    .btn--icon {
+      padding: 8px 10px;
+      border-radius: 7px;
     }
 
-    /* ── Tabla ── */
-    .table-wrap { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; }
+    /* ── Tabla de invitados ── */
+    .guests-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 160px;
+      border: 1.5px solid var(--sage-pale);
+      border-radius: 8px;
+      padding: 9px 14px;
+      font-family: var(--font-body);
+      font-size: 0.83rem;
+      color: var(--ink);
+      background: var(--cream);
+      outline: none;
+    }
+    .search-input:focus { border-color: var(--sage); background: var(--white); }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 16px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.83rem;
+    }
+
     thead th {
-      padding: 10px 14px; font-size: 0.62rem; font-weight: 600;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--sage-light); background: var(--cream);
+      text-align: left;
+      padding: 10px 14px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sage-light);
       border-bottom: 1.5px solid var(--cream-dark);
-      white-space: nowrap; text-align: left;
+      background: var(--cream);
+      white-space: nowrap;
     }
+
     tbody tr {
       border-bottom: 1px solid var(--cream-dark);
-      transition: background var(--transition);
+      transition: background 0.15s;
     }
     tbody tr:hover { background: #faf8f4; }
     tbody tr:last-child { border-bottom: none; }
-    tbody td { padding: 11px 14px; vertical-align: middle; color: var(--ink); }
+
+    tbody td {
+      padding: 12px 14px;
+      vertical-align: middle;
+      color: var(--ink);
+    }
 
     .td-name {
-      font-family: var(--font-display); font-size: 1rem;
-      font-weight: 500; color: var(--sage);
-    }
-    .td-nota {
-      font-size: 0.72rem; color: var(--sage-light); font-style: italic;
-      margin-top: 2px; max-width: 180px; white-space: nowrap;
-      overflow: hidden; text-overflow: ellipsis;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--sage);
     }
 
-    .select-seats {
-      border: none; background: var(--cream-dark); color: var(--sage);
-      font-family: var(--font-ui); font-size: 0.72rem; font-weight: 600;
-      cursor: pointer; padding: 4px 8px; border-radius: 20px; outline: none;
-    }
-    .select-status {
-      border: 1.5px solid #E8DCC8; border-radius: 8px;
-      padding: 5px 8px; font-family: var(--font-ui);
-      font-size: 0.72rem; font-weight: 500; cursor: pointer;
-      outline: none; background: var(--white);
-      transition: border-color var(--transition);
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
     }
 
-    /* status colors */
-    .status-si    { color: var(--success); border-color: #b8ddc8; background: var(--success-bg); }
-    .status-no    { color: var(--danger);  border-color: #f0c0c0; background: var(--danger-bg); }
-    .status-pend  { color: var(--warning); border-color: #e8d0a0; background: var(--warning-bg); }
-
-    .badge-status {
-      display: inline-block; padding: 3px 10px;
-      border-radius: 20px; font-size: 0.62rem; font-weight: 600;
-      letter-spacing: 0.06em; white-space: nowrap;
+    .badge--seats {
+      background: var(--cream-dark);
+      color: var(--sage);
     }
-    .badge-status--si   { background: var(--success-bg); color: var(--success); }
-    .badge-status--no   { background: var(--danger-bg);  color: var(--danger); }
-    .badge-status--pend { background: var(--warning-bg); color: var(--warning); }
 
-    /* Link cell */
-    .link-cell { display: flex; align-items: center; gap: 5px; }
+    /* ── Link generado ── */
+    .link-cell {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
     .link-text {
-      font-size: 0.68rem; color: var(--sage-light); font-family: monospace;
-      background: var(--cream); border: 1px solid var(--sage-pale);
-      border-radius: 5px; padding: 4px 8px;
-      max-width: 180px; overflow: hidden;
-      text-overflow: ellipsis; white-space: nowrap; cursor: default;
+      font-size: 0.72rem;
+      color: var(--sage-light);
+      font-family: monospace;
+      background: var(--cream);
+      border: 1px solid var(--sage-pale);
+      border-radius: 5px;
+      padding: 4px 8px;
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      cursor: default;
     }
+
     .copy-btn {
-      background: none; border: none; cursor: pointer;
-      color: var(--sage-light); font-size: 0.85rem;
-      padding: 4px 6px; border-radius: 5px;
-      transition: all var(--transition);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--sage-light);
+      font-size: 0.85rem;
+      padding: 4px 6px;
+      border-radius: 5px;
+      transition: all 0.2s;
     }
     .copy-btn:hover { color: var(--sage); background: var(--cream-dark); }
     .copy-btn.copied { color: var(--success); }
 
-    /* ── Cards móvil ── */
-    .guest-cards { display: none; flex-direction: column; gap: 10px; padding: 16px; }
-    .guest-card {
-      background: var(--cream); border: 1px solid #E8DCC8;
-      border-radius: var(--radius); padding: 14px 16px;
-    }
-    .guest-card__top {
-      display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px;
-    }
-    .guest-card__name {
-      font-family: var(--font-display); font-size: 1.05rem;
-      font-weight: 500; color: var(--sage);
-    }
-    .guest-card__row {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 8px; flex-wrap: wrap;
-    }
-    .guest-card__actions {
-      display: flex; align-items: center; gap: 6px; margin-top: 10px;
-      padding-top: 10px; border-top: 1px solid #E8DCC8;
-    }
-
-    /* ── Inline nota edit ── */
-    .nota-input {
-      border: 1.5px solid transparent; border-radius: 6px;
-      padding: 3px 6px; font-family: var(--font-ui);
-      font-size: 0.72rem; color: var(--sage-light);
-      background: transparent; outline: none; width: 100%;
-      font-style: italic; transition: all var(--transition);
-    }
-    .nota-input:focus {
-      border-color: var(--sage-pale); background: var(--white);
-      color: var(--ink); font-style: normal;
-    }
-    .nota-input::placeholder { color: var(--sage-pale); }
-
-    /* ── Confirmados ── */
-    .confirmados-list { display: flex; flex-direction: column; gap: 8px; }
-    .confirmado-item {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 10px; padding: 10px 14px;
-      background: var(--cream); border: 1px solid #E8DCC8;
-      border-radius: var(--radius); cursor: grab;
-      transition: all var(--transition);
-    }
-    .confirmado-item:hover { border-color: var(--sage-pale); box-shadow: var(--shadow-sm); }
-    .confirmado-item.dragging { opacity: 0.4; transform: scale(0.97); }
-    .confirmado-item.has-mesa { border-left: 3px solid var(--gold); }
-    .confirmado-item.no-mesa  { border-left: 3px solid var(--sage-pale); }
-    .confirmado-item__name { font-family: var(--font-display); font-weight: 500; color: var(--sage); font-size: 1rem; }
-    .confirmado-item__meta { font-size: 0.68rem; color: var(--sage-light); letter-spacing: 0.06em; }
-    .confirmado-item__tag {
-      font-size: 0.60rem; font-weight: 600; letter-spacing: 0.08em;
-      text-transform: uppercase; padding: 2px 8px; border-radius: 999px;
-      white-space: nowrap; flex-shrink: 0;
-    }
-    .tag--sin-mesa  { background: var(--cream-dark); color: var(--sage-light); }
-    .tag--con-mesa  { background: rgba(181,135,74,0.12); color: var(--gold); }
-
-    /* ── Mesas ── */
-    .mesas-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 14px;
-    }
-    .mesa {
-      background: var(--white); border: 1.5px solid #E8DCC8;
-      border-radius: var(--radius-lg); overflow: hidden;
-      box-shadow: var(--shadow-sm);
-      transition: box-shadow var(--transition);
-    }
-    .mesa:hover { box-shadow: var(--shadow); }
-    .mesa__header {
-      padding: 12px 14px; border-bottom: 1px solid var(--cream-dark);
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 8px; background: var(--cream);
-    }
-    .mesa__title-input {
-      border: 1.5px solid transparent; background: transparent;
-      font-family: var(--font-display); font-size: 1rem;
-      font-weight: 500; color: var(--sage); border-radius: 6px;
-      padding: 3px 6px; outline: none; width: 130px;
-      transition: all var(--transition);
-    }
-    .mesa__title-input:focus {
-      border-color: var(--sage-pale); background: var(--white);
-    }
-    .mesa__cap-wrap { display: flex; align-items: center; gap: 6px; }
-    .mesa__cap-badge {
-      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.06em;
-      padding: 2px 8px; border-radius: 999px; white-space: nowrap;
-    }
-    .mesa__cap-badge--ok   { background: var(--success-bg); color: var(--success); }
-    .mesa__cap-badge--full { background: var(--danger-bg);  color: var(--danger); }
-    .mesa__cap-badge--warn { background: var(--warning-bg); color: var(--warning); }
-    .mesa__cap-input {
-      width: 48px; border: 1.5px solid var(--sage-pale);
-      border-radius: 6px; padding: 3px 6px;
-      font-family: var(--font-ui); font-size: 0.78rem;
-      text-align: center; background: var(--white); outline: none;
-      transition: border-color var(--transition);
-    }
-    .mesa__cap-input:focus { border-color: var(--sage); }
-    .mesa__pases-label {
-      font-size: 0.62rem; color: var(--sage-light); letter-spacing: 0.08em;
-      text-align: center; padding: 6px 14px 0;
-    }
-    .mesa__body { padding: 12px 14px; min-height: 80px; }
-    .mesa__dropzone {
-      border: 2px dashed var(--sage-pale); border-radius: var(--radius);
-      padding: 14px; text-align: center;
-      color: var(--sage-light); font-size: 0.72rem;
-      transition: all var(--transition); background: var(--cream);
-      letter-spacing: 0.04em;
-    }
-    .mesa__dropzone.drag-over {
-      border-color: var(--gold); background: rgba(181,135,74,0.06);
-      color: var(--gold); transform: scale(1.01);
-    }
-    .mesa__lista {
-      list-style: none; display: flex; flex-direction: column;
-      gap: 5px; margin-top: 10px;
-    }
-    .mesa__lista li {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 7px 10px; background: var(--cream-dark);
-      border-radius: 7px; font-size: 0.80rem;
-    }
-    .mesa__lista li button {
-      background: none; border: none; color: var(--sage-light);
-      cursor: pointer; padding: 2px 6px; border-radius: 4px;
-      transition: all var(--transition);
-    }
-    .mesa__lista li button:hover { color: var(--danger); background: var(--danger-bg); }
-    .mesa__vacio {
-      border: 1.5px dashed var(--sage-pale); background: transparent !important;
-      color: var(--sage-pale) !important; justify-content: center;
-      font-style: italic; font-size: 0.72rem;
-    }
-
-    /* ── Configuración ── */
-    .config-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: end; }
-
     /* ── Toast ── */
     .toast {
-      position: fixed; bottom: 28px; left: 50%;
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
       transform: translateX(-50%) translateY(80px);
-      background: var(--ink); color: var(--white);
-      padding: 11px 22px; border-radius: 40px;
-      font-size: 0.78rem; font-weight: 500; letter-spacing: 0.04em;
-      z-index: 999; transition: transform 0.3s ease;
-      pointer-events: none; box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-      display: flex; align-items: center; gap: 8px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 12px 24px;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      z-index: 999;
+      transition: transform 0.3s ease;
+      pointer-events: none;
     }
-    .toast.show { transform: translateX(-50%) translateY(0); }
-    .toast--success { background: var(--success); }
-    .toast--danger  { background: var(--danger); }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
 
     /* ── Empty state ── */
     .empty-state {
-      text-align: center; padding: 40px 24px;
+      text-align: center;
+      padding: 48px 24px;
       color: var(--sage-pale);
     }
-    .empty-state i { font-size: 2rem; margin-bottom: 10px; display: block; }
-    .empty-state p { font-size: 0.80rem; letter-spacing: 0.04em; color: var(--sage-light); }
 
-    /* ── Section label ── */
-    .section-eyebrow {
-      font-size: 0.62rem; font-weight: 600; letter-spacing: 0.18em;
-      text-transform: uppercase; color: var(--sage-light);
-      display: block; margin-bottom: 16px;
+    .empty-state i {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+      display: block;
     }
+
+    .empty-state p {
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+    }
+
+    /* ── Export section ── */
+    .export-bar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    /* ── Confirmados + Mesas ── */
+    .confirmados-list { display:flex; flex-direction:column; gap:8px; }
+    .confirmado-item {
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      padding:10px 14px; background:var(--cream); border:1px solid #E8DCC8; border-radius:10px;
+      cursor:grab; transition: all 0.2s;
+    }
+    .confirmado-item:active { cursor:grabbing; }
+    .confirmado-item.dragging { opacity:0.45; transform: scale(0.98); }
+    .confirmado-item__name { font-family:var(--font-display); font-weight:500; color:var(--sage); }
+    .confirmado-item__seats { font-size:0.72rem; color:var(--sage-light); letter-spacing:0.08em; }
+    .mesa { background:var(--white); border:1.5px solid #E8DCC8; border-radius:12px; overflow:hidden; box-shadow:var(--shadow); }
+    .mesa__header { padding:14px 16px; border-bottom:1px solid var(--cream-dark); display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; background:var(--cream); }
+    .mesa__title { font-family:var(--font-display); font-weight:500; color:var(--sage); letter-spacing:0.04em; }
+    .mesa__cap { font-size:0.72rem; color:var(--sage-light); letter-spacing:0.08em; display:flex; align-items:center; gap:6px; }
+    .mesa__cap input { width:52px; border:1.5px solid var(--sage-pale); border-radius:6px; padding:4px 6px; font-family:var(--font-display); text-align:center; background:var(--white); }
+    .mesa__body { padding:16px; min-height:90px; }
+    .mesa__dropzone { border:2px dashed var(--sage-pale); border-radius:10px; padding:16px; text-align:center; color:var(--sage-light); font-size:0.78rem; transition:all 0.2s; background:var(--cream); }
+    .mesa__dropzone.drag-over { border-color:var(--gold); background:var(--cream-dark); color:var(--sage); transform: scale(1.01); }
+    .mesa__lista { list-style:none; display:flex; flex-direction:column; gap:6px; margin-top:12px; }
+    .mesa__lista li { display:flex; align-items:center; justify-content:space-between; padding:8px 10px; background:var(--cream-dark); border-radius:8px; font-size:0.85rem; }
+    .mesa__lista li button { background:none; border:none; color:var(--sage-light); cursor:pointer; padding:2px 6px; }
+    .mesa__lista li button:hover { color:var(--danger); }
+    .mesa__vacio { border:1.5px dashed var(--sage-pale); background:transparent !important; color:var(--sage-pale) !important; justify-content:center; font-style:italic; font-size:0.78rem; padding:8px; border-radius:8px; display:flex; }
 
     /* ── Responsive ── */
-    @media (max-width: 700px) {
-      .stats { grid-template-columns: repeat(3, 1fr); }
-      .stats .stat:nth-child(4),
-      .stats .stat:nth-child(5) { display: none; }
-      .form-row { grid-template-columns: 1fr 80px; }
-      .form-row .btn { grid-column: 1 / -1; justify-content: center; }
-      .table-wrap table { display: none; }
-      .guest-cards { display: flex; }
-      .config-row { grid-template-columns: 1fr; }
-      .header__pill { display: none; }
-    }
-    @media (max-width: 480px) {
-      .stats { grid-template-columns: repeat(3, 1fr); gap: 6px; }
-      .stat__num { font-size: 1.6rem; }
-      .main { padding: 20px 14px 80px; }
-      .card__body { padding: 16px; }
-      .card__header { padding: 14px 16px; }
+    @media (max-width: 600px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      .stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+      }
+      .stat-card { padding: 12px; }
+      .stat-card__number { font-size: 1.6rem; }
+      .header { flex-direction: column; align-items: flex-start; gap: 4px; }
+      .link-text { max-width: 120px; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- Hero -->
+  <!-- Hero — solo foto sin texto -->
   <div class="admin-hero" aria-hidden="true">
     <img class="admin-hero__img" src="assets/hero-couple.jpg" alt="" onerror="this.style.display='none'" />
     <div class="admin-hero__overlay"></div>
-    <p class="admin-hero__label">Miguel <span>&</span> Susana</p>
   </div>
 
   <!-- Header -->
   <header class="header">
-    <div class="header__left">
-      <div class="header__dot"></div>
-      <div class="header__brand">Admin <em>Invitaciones</em></div>
-      <span class="header__pill">Boda 11·11·2026</span>
+    <div class="header__brand">
+      Miguel <span>&</span> Susana
     </div>
-    <div class="header__actions">
-      <span class="header__date" id="headerDate"></span>
+    <div class="header__meta">
+      Admin · Invitaciones<br>
+      <span id="headerDate"></span>
     </div>
   </header>
 
@@ -590,46 +494,31 @@
 
     <!-- Stats -->
     <div class="stats">
-      <div class="stat">
-        <div class="stat__num" id="statTotal">0</div>
-        <div class="stat__label">Invitados</div>
+      <div class="stat-card">
+        <div class="stat-card__number" id="statTotal">0</div>
+        <div class="stat-card__label">Invitados</div>
       </div>
-      <div class="stat stat--pases">
-        <div class="stat__num" id="statPases">0</div>
-        <div class="stat__label">Pases</div>
+      <div class="stat-card">
+        <div class="stat-card__number" id="statPases">0</div>
+        <div class="stat-card__label">Pases totales</div>
       </div>
-      <div class="stat stat--confirm">
-        <div class="stat__num" id="statConfirmados">0</div>
-        <div class="stat__label">Confirmados</div>
+      <div class="stat-card">
+        <div class="stat-card__number" id="statLinks">0</div>
+        <div class="stat-card__label">Links generados</div>
       </div>
-      <div class="stat stat--no">
-        <div class="stat__num" id="statNo">0</div>
-        <div class="stat__label">No asistirán</div>
-      </div>
-      <div class="stat stat--pend">
-        <div class="stat__num" id="statPend">0</div>
-        <div class="stat__label">Pendientes</div>
-      </div>
-    </div>
-
-    <!-- Barra progreso -->
-    <div class="progress-wrap">
-      <span class="progress-label">Confirmación</span>
-      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-      <span class="progress-pct" id="progressPct">0%</span>
-      <span class="progress-label" id="progressPasesLabel" style="font-size:0.62rem;"></span>
     </div>
 
     <!-- Agregar invitado -->
     <div class="card">
       <div class="card__header">
-        <span class="card__title"><i class="fa-solid fa-user-plus"></i> Agregar invitado</span>
+        <span class="card__title">Agregar invitado</span>
       </div>
       <div class="card__body">
         <div class="form-row">
           <div class="form-group">
-            <label for="inputName">Nombre o familia</label>
-            <input type="text" id="inputName" placeholder="Ej: Familia González" autocomplete="off" />
+            <label for="inputName">Nombre del invitado</label>
+            <input type="text" id="inputName" placeholder="Ej: Familia González"
+                   autocomplete="off" />
           </div>
           <div class="form-group">
             <label for="inputSeats">Pases</label>
@@ -642,10 +531,6 @@
               <option value="6">6</option>
             </select>
           </div>
-          <div class="form-group">
-            <label for="inputNota">Nota (opcional)</label>
-            <input type="text" id="inputNota" placeholder="Ej: Tíos de Miguel" autocomplete="off" />
-          </div>
           <button class="btn btn--primary" onclick="addGuest()">
             <i class="fa-solid fa-plus"></i> Agregar
           </button>
@@ -653,29 +538,23 @@
       </div>
     </div>
 
-    <!-- Lista invitados -->
+    <!-- Lista de invitados -->
     <div class="card">
       <div class="card__header">
-        <span class="card__title"><i class="fa-regular fa-list-alt"></i> Lista de invitados</span>
-        <div class="toolbar">
-          <input class="toolbar__search" type="text" id="searchInput"
-                 placeholder="Buscar..." oninput="renderTable()" />
-          <div class="filter-tabs">
-            <button class="filter-tab active" onclick="setFilter('todos', this)">Todos</button>
-            <button class="filter-tab" onclick="setFilter('si', this)">✓</button>
-            <button class="filter-tab" onclick="setFilter('no', this)">✗</button>
-            <button class="filter-tab" onclick="setFilter('pendiente', this)">?</button>
-          </div>
-          <button class="btn btn--outline btn--icon btn--sm" onclick="exportCSV()" title="Exportar CSV">
+        <span class="card__title">Lista de invitados</span>
+        <div class="guests-toolbar">
+          <input class="search-input" type="text" id="searchInput"
+                 placeholder="Buscar invitado..."
+                 oninput="renderTable()" />
+          <button class="btn btn--outline btn--icon" onclick="exportCSV()" title="Exportar CSV">
             <i class="fa-solid fa-file-csv"></i>
           </button>
-          <button class="btn btn--outline btn--icon btn--sm" onclick="copyAllLinks()" title="Copiar todos los links">
+          <button class="btn btn--outline btn--icon" onclick="copyAllLinks()" title="Copiar todos los links">
             <i class="fa-solid fa-copy"></i>
           </button>
         </div>
       </div>
-      <div class="card__body--flush">
-        <!-- Tabla desktop -->
+      <div class="card__body" style="padding: 0;">
         <div class="table-wrap">
           <table>
             <thead>
@@ -684,40 +563,51 @@
                 <th>Nombre</th>
                 <th>Pases</th>
                 <th>Estado</th>
-                <th>Link</th>
+                <th>Link personalizado</th>
                 <th></th>
               </tr>
             </thead>
-            <tbody id="guestTableBody"></tbody>
+            <tbody id="guestTableBody">
+              <!-- filas dinámicas -->
+            </tbody>
           </table>
           <div id="emptyState" class="empty-state" style="display:none;">
-            <i class="fa-regular fa-envelope-open"></i>
-            <p>Aún no hay invitados — agrega el primero arriba</p>
+            <i class="fa-regular fa-envelope"></i>
+            <p>Aún no hay invitados. ¡Agregá el primero!</p>
           </div>
         </div>
-        <!-- Cards móvil -->
-        <div class="guest-cards" id="guestCards"></div>
+      </div>
+    </div>
+
+    <!-- Configuración del link base -->
+    <div class="card">
+      <div class="card__header">
+        <span class="card__title">Configuración</span>
+      </div>
+      <div class="card__body">
+        <div class="form-group">
+          <label for="baseUrl">URL base de la invitación</label>
+          <input type="text" id="baseUrl"
+                 placeholder="https://tuusuario.github.io/wedding-miguel-susana/"
+                 oninput="saveConfig(); renderTable()" />
+        </div>
+        <p style="font-size:0.72rem; color:var(--sage-light); margin-top:8px; letter-spacing:0.04em;">
+          Esta URL se usará para generar los links personalizados de cada invitado.
+        </p>
       </div>
     </div>
 
     <!-- Confirmados -->
     <div class="card" id="confirmadosCard">
       <div class="card__header">
-        <span class="card__title"><i class="fa-regular fa-circle-check"></i> Confirmados</span>
-        <span style="font-size:0.70rem; color:var(--sage-light);">
-          <span id="statConfirmados2">0</span> confirmados ·
-          <span id="statPasesConfirmados">0</span> pases confirmados
-        </span>
+        <span class="card__title">Confirmados</span>
+        <span style="font-size:0.72rem; color:var(--sage-light); letter-spacing:0.08em;"><span id="statConfirmados">0</span> confirmados · <span id="statNo">0</span> no asistirán</span>
       </div>
       <div class="card__body">
-        <p style="font-size:0.70rem; color:var(--sage-light); margin-bottom:12px; letter-spacing:0.04em;">
-          <i class="fa-solid fa-grip" style="opacity:0.5;"></i>
-          Arrastra los confirmados a una mesa
-        </p>
         <div id="confirmadosList" class="confirmados-list"></div>
         <div id="confirmadosEmpty" class="empty-state" style="display:none; padding:24px;">
           <i class="fa-regular fa-circle-check"></i>
-          <p>Nadie confirmado aún — cambia el estado en la tabla</p>
+          <p>Nadie ha confirmado aún — cambia el estado en la tabla o espera RSVP</p>
         </div>
       </div>
     </div>
@@ -725,62 +615,18 @@
     <!-- Mesas -->
     <div class="card" id="mesasCard">
       <div class="card__header" style="flex-wrap:wrap; gap:12px;">
-        <span class="card__title"><i class="fa-solid fa-chair"></i> Mesas</span>
+        <span class="card__title">Mesas</span>
         <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-          <input type="text" id="mesaName" placeholder="Nombre de la mesa"
-                 style="border:1.5px solid var(--sage-pale); border-radius:8px; padding:7px 10px;
-                        font-family:var(--font-ui); font-size:0.80rem; width:160px; background:var(--cream);" />
-          <input type="number" id="mesaCap" min="1" max="20" value="8" placeholder="Cap."
-                 style="border:1.5px solid var(--sage-pale); border-radius:8px; padding:7px 8px;
-                        font-family:var(--font-ui); font-size:0.80rem; width:70px; background:var(--cream);"
-                 title="Capacidad" />
-          <button class="btn btn--primary btn--sm" onclick="addMesa()">
-            <i class="fa-solid fa-plus"></i> Crear mesa
-          </button>
+          <input type="text" id="mesaName" placeholder="Mesa 1" style="border:1.5px solid var(--sage-pale); border-radius:8px; padding:8px 10px; font-family:var(--font-display); font-size:0.85rem; width:120px; background:var(--cream);" />
+          <label style="font-size:0.70rem; color:var(--sage-light); letter-spacing:0.08em; text-transform:uppercase;">Capacidad <input type="number" id="mesaCap" min="1" max="12" value="6" style="border:1.5px solid var(--sage-pale); border-radius:8px; padding:6px 8px; font-family:var(--font-display); font-size:0.85rem; width:64px; background:var(--cream); margin-left:4px;" /></label>
+          <button class="btn btn--primary" onclick="addMesa()"><i class="fa-solid fa-plus"></i> Crear mesa</button>
         </div>
       </div>
       <div class="card__body">
-        <div class="mesas-grid" id="mesasGrid"></div>
+        <div id="mesasGrid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap:16px;"></div>
         <div id="mesasEmpty" class="empty-state" style="padding:24px;">
           <i class="fa-solid fa-chair"></i>
           <p>Crea tu primera mesa y arrastra confirmados hacia ella</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Configuración -->
-    <div class="card">
-      <div class="card__header">
-        <span class="card__title"><i class="fa-solid fa-gear"></i> Configuración</span>
-      </div>
-      <div class="card__body">
-        <div class="config-row">
-          <div class="form-group">
-            <label for="baseUrl">URL base de la invitación</label>
-            <input type="text" id="baseUrl"
-                   placeholder="https://tuusuario.github.io/boda-miguel-susana/"
-                   oninput="saveConfig(); renderTable()" />
-          </div>
-          <div style="display:flex; flex-direction:column; gap:6px;">
-            <label style="font-size:0.62rem; color:transparent; letter-spacing:0.14em;">·</label>
-            <button class="btn btn--outline btn--sm" onclick="testLink()">
-              <i class="fa-solid fa-arrow-up-right-from-square"></i> Probar link
-            </button>
-          </div>
-        </div>
-        <p style="font-size:0.68rem; color:var(--sage-light); margin-top:10px;">
-          Se usará para generar los links personalizados de cada invitado con su nombre y pases.
-        </p>
-        <div style="margin-top:18px; padding-top:18px; border-top:1px solid var(--cream-dark); display:flex; gap:10px; flex-wrap:wrap;">
-          <button class="btn btn--outline btn--sm" onclick="exportCSV()">
-            <i class="fa-solid fa-file-csv"></i> Exportar CSV
-          </button>
-          <button class="btn btn--outline btn--sm" onclick="copyAllLinks()">
-            <i class="fa-solid fa-copy"></i> Copiar todos los links
-          </button>
-          <button class="btn btn--danger-ghost btn--sm" onclick="clearAllData()">
-            <i class="fa-regular fa-trash-can"></i> Borrar todo
-          </button>
         </div>
       </div>
     </div>
@@ -801,45 +647,50 @@
     function loadGuests() {
       try {
         const raw = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-        return raw.map(g => ({ status: 'pendiente', mesaId: null, nota: '', ...g }));
+        // migración: asegurar status y mesaId
+        return raw.map(g => ({ status: 'pendiente', mesaId: null, ...g }));
       } catch { return []; }
     }
-    function saveGuests(guests) { localStorage.setItem(STORAGE_KEY, JSON.stringify(guests)); }
+
+    function saveGuests(guests) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(guests));
+    }
+
     function loadMesas() {
       try { return JSON.parse(localStorage.getItem(MESAS_KEY)) || []; }
       catch { return []; }
     }
-    function saveMesas(mesas) { localStorage.setItem(MESAS_KEY, JSON.stringify(mesas)); }
+    function saveMesas(mesas) {
+      localStorage.setItem(MESAS_KEY, JSON.stringify(mesas));
+    }
+
     function loadConfig() {
       try { return JSON.parse(localStorage.getItem(CONFIG_KEY)) || {}; }
       catch { return {}; }
     }
-    function saveConfig() {
-      localStorage.setItem(CONFIG_KEY, JSON.stringify({ baseUrl: document.getElementById('baseUrl').value.trim() }));
-    }
 
-    /* ══════════════════════════════
-       FILTRO ACTIVO
-    ══════════════════════════════ */
-    let activeFilter = 'todos';
-    function setFilter(f, btn) {
-      activeFilter = f;
-      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
-      btn.classList.add('active');
-      renderTable();
+    function saveConfig() {
+      const config = { baseUrl: document.getElementById('baseUrl').value.trim() };
+      localStorage.setItem(CONFIG_KEY, JSON.stringify(config));
     }
 
     /* ══════════════════════════════
        INIT
     ══════════════════════════════ */
     document.addEventListener('DOMContentLoaded', () => {
+      // Fecha en header
       document.getElementById('headerDate').textContent =
-        new Date().toLocaleDateString('es-SV', { weekday:'long', day:'2-digit', month:'long', year:'numeric' });
+        new Date().toLocaleDateString('es-SV', { day:'2-digit', month:'short', year:'numeric' });
+
+      // Cargar config
       const cfg = loadConfig();
       if (cfg.baseUrl) document.getElementById('baseUrl').value = cfg.baseUrl;
+
+      // Enter en el input nombre
       document.getElementById('inputName').addEventListener('keydown', e => {
         if (e.key === 'Enter') addGuest();
       });
+
       renderTable();
     });
 
@@ -849,17 +700,12 @@
     function buildLink(guest) {
       const base = document.getElementById('baseUrl').value.trim()
         || window.location.href.replace('admin.html', 'index.html');
+
       const url = new URL(base.endsWith('/') ? base + 'index.html' : base);
       url.searchParams.set('invitado', guest.name);
       url.searchParams.set('cantidad', guest.seats);
       url.searchParams.set('id', guest.id);
       return url.toString();
-    }
-
-    function testLink() {
-      const guests = loadGuests();
-      const sample = guests[0] || { name: 'Invitado', seats: 2, id: 0 };
-      window.open(buildLink(sample), '_blank');
     }
 
     /* ══════════════════════════════
@@ -868,58 +714,79 @@
     function addGuest() {
       const nameInput  = document.getElementById('inputName');
       const seatsInput = document.getElementById('inputSeats');
-      const notaInput  = document.getElementById('inputNota');
       const name = nameInput.value.trim();
-      if (!name) { nameInput.focus(); showToast('Ingresa el nombre del invitado', 'danger'); return; }
-      const guests = loadGuests();
-      if (guests.some(g => g.name.toLowerCase() === name.toLowerCase())) {
-        showToast('Ya existe un invitado con ese nombre', 'danger'); return;
+
+      if (!name) {
+        nameInput.focus();
+        showToast('Por favor ingresa un nombre.');
+        return;
       }
-      guests.push({
-        id: Date.now(), name,
+
+      const guests = loadGuests();
+
+      // Verificar duplicado
+      if (guests.some(g => g.name.toLowerCase() === name.toLowerCase())) {
+        showToast('Ya existe un invitado con ese nombre.');
+        return;
+      }
+
+      const guest = {
+        id:    Date.now(),
+        name:  name,
         seats: parseInt(seatsInput.value),
-        nota: notaInput.value.trim(),
-        status: 'pendiente', mesaId: null,
+        status: 'pendiente',
+        mesaId: null,
         createdAt: new Date().toISOString()
-      });
+      };
+
+      guests.push(guest);
       saveGuests(guests);
-      nameInput.value = ''; notaInput.value = '';
-      seatsInput.value = '2'; nameInput.focus();
+
+      nameInput.value = '';
+      seatsInput.value = '2';
+      nameInput.focus();
+
       renderTable();
-      showToast(`✓ ${name} agregado`, 'success');
+      showToast(`✓ ${name} agregado correctamente.`);
     }
 
     /* ══════════════════════════════
-       ELIMINAR
+       ELIMINAR INVITADO
     ══════════════════════════════ */
     function deleteGuest(id) {
-      if (!confirm('¿Eliminar este invitado?')) return;
       const guests = loadGuests().filter(g => g.id !== id);
       saveGuests(guests);
+      // limpiar de mesas
       const mesas = loadMesas().map(m => ({ ...m, invitados: m.invitados.filter(gid => gid !== id) }));
       saveMesas(mesas);
       renderTable();
-      showToast('Invitado eliminado');
+      showToast('Invitado eliminado.');
     }
 
     /* ══════════════════════════════
-       EDITAR
+       EDITAR PASES
     ══════════════════════════════ */
     function updateSeats(id, seats) {
-      saveGuests(loadGuests().map(g => g.id === id ? { ...g, seats: parseInt(seats) } : g));
-      renderTable();
-    }
-    function updateStatus(id, status) {
-      let guests = loadGuests().map(g => g.id === id ? { ...g, status } : g);
-      if (status !== 'si') {
-        guests = guests.map(g => g.id === id ? { ...g, mesaId: null } : g);
-        saveMesas(loadMesas().map(m => ({ ...m, invitados: m.invitados.filter(gid => gid !== id) })));
-      }
+      const guests = loadGuests().map(g =>
+        g.id === id ? { ...g, seats: parseInt(seats) } : g
+      );
       saveGuests(guests);
       renderTable();
     }
-    function updateNota(id, nota) {
-      saveGuests(loadGuests().map(g => g.id === id ? { ...g, nota } : g));
+
+    /* ══════════════════════════════
+       EDITAR ESTADO
+    ══════════════════════════════ */
+    function updateStatus(id, status) {
+      const guests = loadGuests().map(g => g.id === id ? { ...g, status } : g);
+      // si ya no va, sacarlo de su mesa
+      if (status !== 'si') {
+        guests.forEach(g => { if (g.id === id) g.mesaId = null; });
+        const mesas = loadMesas().map(m => ({ ...m, invitados: m.invitados.filter(gid => gid !== id) }));
+        saveMesas(mesas);
+      }
+      saveGuests(guests);
+      renderTable();
     }
 
     /* ══════════════════════════════
@@ -928,37 +795,24 @@
     function renderTable() {
       const guests  = loadGuests();
       const query   = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = query
+        ? guests.filter(g => g.name.toLowerCase().includes(query))
+        : guests;
 
-      let filtered = guests;
-      if (query) filtered = filtered.filter(g => g.name.toLowerCase().includes(query) || (g.nota||'').toLowerCase().includes(query));
-      if (activeFilter !== 'todos') filtered = filtered.filter(g => g.status === activeFilter);
-
-      // Stats
-      const total = guests.length;
-      const pases = guests.reduce((s,g) => s + g.seats, 0);
-      const confirm = guests.filter(g => g.status === 'si').length;
-      const noVan   = guests.filter(g => g.status === 'no').length;
-      const pend    = guests.filter(g => g.status === 'pendiente').length;
-      const pasesConfirm = guests.filter(g => g.status === 'si').reduce((s,g) => s+g.seats, 0);
-      const pct = total ? Math.round((confirm / total) * 100) : 0;
-
-      document.getElementById('statTotal').textContent        = total;
-      document.getElementById('statPases').textContent        = pases;
-      document.getElementById('statConfirmados').textContent  = confirm;
-      document.getElementById('statNo').textContent           = noVan;
-      document.getElementById('statPend').textContent         = pend;
-      const el2 = document.getElementById('statConfirmados2');
-      if (el2) el2.textContent = confirm;
-      const elPasesC = document.getElementById('statPasesConfirmados');
-      if (elPasesC) elPasesC.textContent = pasesConfirm;
-      document.getElementById('progressFill').style.width = pct + '%';
-      document.getElementById('progressPct').textContent  = pct + '%';
-      const lbl = document.getElementById('progressPasesLabel');
-      if (lbl) lbl.textContent = pasesConfirm + ' pases confirmados';
-
-      // Tabla desktop
       const tbody = document.getElementById('guestTableBody');
       const empty = document.getElementById('emptyState');
+
+      // Stats
+      document.getElementById('statTotal').textContent = guests.length;
+      document.getElementById('statPases').textContent = guests.reduce((s, g) => s + g.seats, 0);
+      document.getElementById('statLinks').textContent = guests.length;
+      const confirmados = guests.filter(g => g.status === 'si').length;
+      const noVan = guests.filter(g => g.status === 'no').length;
+      const elConfirm = document.getElementById('statConfirmados');
+      if (elConfirm) elConfirm.textContent = confirmados;
+      const elNo = document.getElementById('statNo');
+      if (elNo) elNo.textContent = noVan;
+
       if (filtered.length === 0) {
         tbody.innerHTML = '';
         empty.style.display = 'block';
@@ -966,95 +820,54 @@
         empty.style.display = 'none';
         tbody.innerHTML = filtered.map((guest, i) => {
           const link = buildLink(guest);
-          const short = link.length > 50 ? link.substring(0, 47) + '...' : link;
-          const seatsOpts = [1,2,3,4,5,6].map(n => `<option value="${n}" ${guest.seats===n?'selected':''}>${n}</option>`).join('');
-          const statusOpts = [
+          const shortLink = link.length > 55 ? link.substring(0, 52) + '...' : link;
+          const seatsOptions = [1,2,3,4,5,6].map(n => `<option value="${n}" ${guest.seats === n ? 'selected' : ''}>${n}</option>`).join('');
+          const statusOptions = [
             {v:'pendiente', l:'Pendiente'},
             {v:'si', l:'Confirmado'},
             {v:'no', l:'No asistirá'}
           ].map(o => `<option value="${o.v}" ${guest.status===o.v?'selected':''}>${o.l}</option>`).join('');
-          const sc = guest.status==='si' ? 'status-si' : guest.status==='no' ? 'status-no' : 'status-pend';
+          const statusColor = guest.status==='si' ? 'var(--success)' : guest.status==='no' ? 'var(--danger)' : 'var(--sage-light)';
           return `
-            <tr draggable="${guest.status==='si'?'true':'false'}"
-                ondragstart="onGuestDragStart(event,${guest.id})"
-                style="${guest.status==='si'?'cursor:grab;':''}">
-              <td style="color:var(--sage-pale); font-size:0.72rem;">${i+1}</td>
+            <tr draggable="${guest.status==='si' ? 'true' : 'false'}" ondragstart="onGuestDragStart(event, ${guest.id})" style="${guest.status==='si' ? 'cursor:grab;' : ''}">
+              <td style="color:var(--sage-pale); font-size:0.75rem;">${i + 1}</td>
+              <td class="td-name">${escapeHtml(guest.name)}</td>
               <td>
-                <div class="td-name">${escapeHtml(guest.name)}</div>
-                <input class="nota-input" value="${escapeHtml(guest.nota||'')}"
-                       placeholder="añadir nota…"
-                       onblur="updateNota(${guest.id}, this.value)"
-                       onkeydown="if(event.key==='Enter') this.blur()" />
-              </td>
-              <td>
-                <select class="select-seats" onchange="updateSeats(${guest.id}, this.value)">
-                  ${seatsOpts}
+                <select class="badge badge--seats"
+                  style="border:none; background:var(--cream-dark); color:var(--sage);
+                         font-family:var(--font-display); font-size:0.75rem; cursor:pointer;
+                         padding:3px 8px; border-radius:20px; outline:none;"
+                  onchange="updateSeats(${guest.id}, this.value)">
+                  ${seatsOptions}
                 </select>
               </td>
               <td>
-                <select class="select-status ${sc}" onchange="this.className='select-status '+getStatusClass(this.value); updateStatus(${guest.id}, this.value)">
-                  ${statusOpts}
+                <select onchange="updateStatus(${guest.id}, this.value)" style="border:1.5px solid #E8DCC8; border-radius:8px; padding:4px 8px; font-family:var(--font-display); font-size:0.75rem; color:${statusColor}; background:var(--white); cursor:pointer;">
+                  ${statusOptions}
                 </select>
               </td>
               <td>
                 <div class="link-cell">
-                  <span class="link-text" title="${escapeHtml(link)}">${escapeHtml(short)}</span>
-                  <button class="copy-btn" onclick="copyLink(this,'${escapeHtml(link)}')" title="Copiar"><i class="fa-regular fa-copy"></i></button>
-                  <a href="${escapeHtml(link)}" target="_blank" style="color:var(--sage-light); font-size:0.78rem;" title="Abrir invitación">
+                  <span class="link-text" title="${escapeHtml(link)}">${escapeHtml(shortLink)}</span>
+                  <button class="copy-btn" onclick="copyLink(this, '${escapeHtml(link)}')"
+                          title="Copiar link">
+                    <i class="fa-regular fa-copy"></i>
+                  </button>
+                  <a href="${escapeHtml(link)}" target="_blank"
+                     style="color:var(--sage-light); font-size:0.8rem; text-decoration:none;"
+                     title="Abrir invitación">
                     <i class="fa-solid fa-arrow-up-right-from-square"></i>
                   </a>
                 </div>
               </td>
               <td>
-                <button class="btn--danger-ghost" onclick="deleteGuest(${guest.id})" title="Eliminar">
+                <button class="btn--danger" onclick="deleteGuest(${guest.id})"
+                        title="Eliminar invitado">
                   <i class="fa-regular fa-trash-can"></i>
                 </button>
               </td>
-            </tr>`;
-        }).join('');
-      }
-
-      // Cards móvil
-      const cards = document.getElementById('guestCards');
-      if (filtered.length === 0) {
-        cards.innerHTML = '';
-      } else {
-        cards.innerHTML = filtered.map(guest => {
-          const link = buildLink(guest);
-          const seatsOpts = [1,2,3,4,5,6].map(n => `<option value="${n}" ${guest.seats===n?'selected':''}>${n}</option>`).join('');
-          const sc = guest.status==='si' ? 'status-si' : guest.status==='no' ? 'status-no' : 'status-pend';
-          const bl = guest.status==='si' ? 'badge-status--si' : guest.status==='no' ? 'badge-status--no' : 'badge-status--pend';
-          const statusLabel = guest.status==='si' ? 'Confirmado' : guest.status==='no' ? 'No asistirá' : 'Pendiente';
-          return `
-            <div class="guest-card">
-              <div class="guest-card__top">
-                <div class="guest-card__name">${escapeHtml(guest.name)}</div>
-                <span class="badge-status ${bl}">${statusLabel}</span>
-              </div>
-              ${guest.nota ? `<div style="font-size:0.72rem; color:var(--sage-light); font-style:italic; margin-bottom:8px;">${escapeHtml(guest.nota)}</div>` : ''}
-              <div class="guest-card__row">
-                <div style="display:flex; align-items:center; gap:6px;">
-                  <span style="font-size:0.68rem; color:var(--sage-light);">Pases:</span>
-                  <select class="select-seats" onchange="updateSeats(${guest.id}, this.value)">${seatsOpts}</select>
-                </div>
-                <select class="select-status ${sc}" onchange="this.className='select-status '+getStatusClass(this.value); updateStatus(${guest.id}, this.value)">
-                  <option value="pendiente" ${guest.status==='pendiente'?'selected':''}>Pendiente</option>
-                  <option value="si" ${guest.status==='si'?'selected':''}>Confirmado</option>
-                  <option value="no" ${guest.status==='no'?'selected':''}>No asistirá</option>
-                </select>
-              </div>
-              <div class="guest-card__actions">
-                <button class="btn btn--outline btn--sm" onclick="copyLink(this,'${escapeHtml(link)}')">
-                  <i class="fa-regular fa-copy"></i> Copiar link
-                </button>
-                <a href="${escapeHtml(link)}" target="_blank" class="btn btn--outline btn--sm">
-                  <i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir
-                </a>
-                <button class="btn--danger-ghost btn--sm" onclick="deleteGuest(${guest.id})" style="margin-left:auto;">
-                  <i class="fa-regular fa-trash-can"></i>
-                </button>
-              </div>
-            </div>`;
+            </tr>
+          `;
         }).join('');
       }
 
@@ -1062,41 +875,34 @@
       renderMesas();
     }
 
-    function getStatusClass(v) {
-      return v==='si' ? 'status-si' : v==='no' ? 'status-no' : 'status-pend';
-    }
-
     /* ══════════════════════════════
        CONFIRMADOS
     ══════════════════════════════ */
     function renderConfirmados() {
       const guests = loadGuests().filter(g => g.status === 'si');
-      const list  = document.getElementById('confirmadosList');
+      const list = document.getElementById('confirmadosList');
       const empty = document.getElementById('confirmadosEmpty');
       if (!list || !empty) return;
-      const pasesC = guests.reduce((s,g) => s+g.seats, 0);
-      const el2 = document.getElementById('statConfirmados2');
-      if (el2) el2.textContent = guests.length;
-      const elPC = document.getElementById('statPasesConfirmados');
-      if (elPC) elPC.textContent = pasesC;
-      if (guests.length === 0) { list.innerHTML = ''; empty.style.display = 'block'; return; }
+      document.getElementById('statConfirmados').textContent = guests.length;
+      const noEl = document.getElementById('statNo');
+      if (noEl) noEl.textContent = loadGuests().filter(g => g.status === 'no').length;
+      if (guests.length === 0) {
+        list.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+      }
       empty.style.display = 'none';
-      const mesas = loadMesas();
       list.innerHTML = guests.map(g => {
-        const mesa = mesas.find(m => m.invitados.includes(g.id));
-        const hasMesa = !!mesa;
+        const mesa = loadMesas().find(m => m.invitados.includes(g.id));
         return `
-          <div class="confirmado-item ${hasMesa?'has-mesa':'no-mesa'}"
-               draggable="true" ondragstart="onGuestDragStart(event,${g.id})" data-id="${g.id}">
+          <div class="confirmado-item" draggable="true" ondragstart="onGuestDragStart(event, ${g.id})" data-id="${g.id}">
             <div style="flex:1; min-width:0;">
               <div class="confirmado-item__name">${escapeHtml(g.name)}</div>
-              <div class="confirmado-item__meta">${g.seats} pase${g.seats>1?'s':''}</div>
+              <div class="confirmado-item__seats">${g.seats} pase${g.seats>1?'s':''} ${mesa ? '· '+escapeHtml(mesa.nombre) : '· sin mesa'}</div>
             </div>
-            <span class="confirmado-item__tag ${hasMesa?'tag--con-mesa':'tag--sin-mesa'}">
-              ${hasMesa ? escapeHtml(mesa.nombre) : 'sin mesa'}
-            </span>
-            <i class="fa-solid fa-grip" style="color:var(--sage-pale); font-size:0.75rem;"></i>
-          </div>`;
+            <span style="font-size:0.70rem; color:var(--sage-light); white-space:nowrap;"><i class="fa-solid fa-grip"></i> arrastrar</span>
+          </div>
+        `;
       }).join('');
     }
 
@@ -1105,191 +911,207 @@
     ══════════════════════════════ */
     function addMesa() {
       const nameInput = document.getElementById('mesaName');
-      const capInput  = document.getElementById('mesaCap');
-      const nombre    = nameInput.value.trim() || `Mesa ${loadMesas().length + 1}`;
-      const capacidad = Math.max(1, Math.min(20, parseInt(capInput.value) || 8));
+      const capInput = document.getElementById('mesaCap');
+      const nombre = nameInput.value.trim() || `Mesa ${loadMesas().length + 1}`;
+      const capacidad = Math.max(1, Math.min(12, parseInt(capInput.value) || 6));
       const mesas = loadMesas();
       mesas.push({ id: Date.now(), nombre, capacidad, invitados: [] });
       saveMesas(mesas);
-      nameInput.value = ''; capInput.value = '8';
+      nameInput.value = '';
+      capInput.value = '6';
       renderMesas();
-      showToast(`✓ ${nombre} creada (${capacidad} lugares)`, 'success');
+      showToast(`✓ ${nombre} creada (${capacidad} lugares)`);
     }
     function deleteMesa(id) {
-      if (!confirm('¿Eliminar esta mesa? Los invitados quedarán sin mesa.')) return;
-      saveMesas(loadMesas().filter(m => m.id !== id));
-      saveGuests(loadGuests().map(g => g.mesaId === id ? { ...g, mesaId: null } : g));
-      renderMesas(); renderConfirmados(); renderTable();
+      let mesas = loadMesas().filter(m => m.id !== id);
+      saveMesas(mesas);
+      const guests = loadGuests().map(g => g.mesaId === id ? { ...g, mesaId: null } : g);
+      saveGuests(guests);
+      renderMesas();
+      renderConfirmados();
+      renderTable();
       showToast('Mesa eliminada');
     }
     function updateMesaCap(id, cap) {
-      const mesas = loadMesas().map(m => m.id === id ? { ...m, capacidad: Math.max(1, Math.min(20, parseInt(cap)||1)) } : m);
+      const mesas = loadMesas().map(m => m.id === id ? { ...m, capacidad: Math.max(1, Math.min(12, parseInt(cap)||1)) } : m);
       const mesa = mesas.find(m => m.id === id);
-      if (mesa && mesa.invitados.length > mesa.capacidad) showToast(`⚠ Capacidad menor que ocupados (${mesa.invitados.length})`, 'danger');
-      saveMesas(mesas); renderMesas();
+      if (mesa && mesa.invitados.length > mesa.capacidad) {
+        showToast(`Capacidad menor que ocupados (${mesa.invitados.length}/${mesa.capacidad})`);
+      }
+      saveMesas(mesas);
+      renderMesas();
     }
     function updateMesaName(id, nombre) {
-      saveMesas(loadMesas().map(m => m.id === id ? { ...m, nombre: nombre.trim() || m.nombre } : m));
+      const mesas = loadMesas().map(m => m.id === id ? { ...m, nombre: nombre.trim() || m.nombre } : m);
+      saveMesas(mesas);
       renderMesas();
     }
     function removeFromMesa(mesaId, guestId) {
-      saveMesas(loadMesas().map(m => m.id === mesaId ? { ...m, invitados: m.invitados.filter(gid => gid !== guestId) } : m));
-      saveGuests(loadGuests().map(g => g.id === guestId ? { ...g, mesaId: null } : g));
-      renderMesas(); renderConfirmados();
+      const mesas = loadMesas().map(m => m.id === mesaId ? { ...m, invitados: m.invitados.filter(gid => gid !== guestId) } : m);
+      saveMesas(mesas);
+      const guests = loadGuests().map(g => g.id === guestId ? { ...g, mesaId: null } : g);
+      saveGuests(guests);
+      renderMesas();
+      renderConfirmados();
     }
     function renderMesas() {
-      const mesas  = loadMesas();
+      const mesas = loadMesas();
       const guests = loadGuests();
-      const grid   = document.getElementById('mesasGrid');
-      const empty  = document.getElementById('mesasEmpty');
+      const grid = document.getElementById('mesasGrid');
+      const empty = document.getElementById('mesasEmpty');
       if (!grid || !empty) return;
-      if (mesas.length === 0) { grid.innerHTML = ''; empty.style.display = 'block'; return; }
+      if (mesas.length === 0) {
+        grid.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+      }
       empty.style.display = 'none';
       grid.innerHTML = mesas.map(mesa => {
         const ocupados = mesa.invitados.length;
-        const vacios   = Math.max(0, mesa.capacidad - ocupados);
-        const pasesOcup = mesa.invitados.reduce((s, gid) => {
-          const g = guests.find(x => x.id === gid);
-          return s + (g ? g.seats : 0);
-        }, 0);
-        const isFull = ocupados >= mesa.capacidad;
-        const badgeClass = isFull ? 'mesa__cap-badge--full' : ocupados > 0 ? 'mesa__cap-badge--warn' : 'mesa__cap-badge--ok';
-        const invHtml = mesa.invitados.map(gid => {
+        const vacios = Math.max(0, mesa.capacidad - ocupados);
+        const invitadosHtml = mesa.invitados.map(gid => {
           const g = guests.find(x => x.id === gid);
           if (!g) return '';
-          return `<li>
-            <span><strong>${escapeHtml(g.name)}</strong>
-              <small style="color:var(--sage-light)"> · ${g.seats} pase${g.seats>1?'s':''}</small>
-            </span>
-            <button onclick="removeFromMesa(${mesa.id},${g.id})" title="Quitar de mesa">
-              <i class="fa-solid fa-xmark"></i>
-            </button>
-          </li>`;
+          return `<li><span><strong>${escapeHtml(g.name)}</strong> <small style="color:var(--sage-light)">· ${g.seats} pases</small></span> <button onclick="removeFromMesa(${mesa.id}, ${g.id})" title="Quitar"><i class="fa-solid fa-xmark"></i></button></li>`;
         }).join('');
-        const vacHtml = Array(vacios).fill(0).map(() =>
-          `<li class="mesa__vacio"><i class="fa-regular fa-circle"></i> Lugar disponible</li>`
-        ).join('');
+        const vaciosHtml = Array(vacios).fill(0).map(() => `<li class="mesa__vacio"><i class="fa-regular fa-circle"></i> Vacío</li>`).join('');
         return `
           <div class="mesa" data-mesa-id="${mesa.id}">
             <div class="mesa__header">
-              <input class="mesa__title-input" value="${escapeHtml(mesa.nombre)}"
-                     onchange="updateMesaName(${mesa.id}, this.value)" />
-              <div class="mesa__cap-wrap">
-                <span class="mesa__cap-badge ${badgeClass}">${ocupados}/${mesa.capacidad}</span>
-                <input class="mesa__cap-input" type="number" min="1" max="20"
-                       value="${mesa.capacidad}" onchange="updateMesaCap(${mesa.id}, this.value)"
-                       title="Capacidad" />
-                <button onclick="deleteMesa(${mesa.id})"
-                        style="background:none;border:none;color:var(--sage-light);cursor:pointer;padding:2px 4px;"
-                        title="Eliminar mesa">
-                  <i class="fa-regular fa-trash-can" style="font-size:0.78rem;"></i>
-                </button>
-              </div>
+              <input class="mesa__title" value="${escapeHtml(mesa.nombre)}" onchange="updateMesaName(${mesa.id}, this.value)" style="border:1.5px solid transparent; background:transparent; font-family:var(--font-display); font-size:1rem; font-weight:500; color:var(--sage); width:120px; border-radius:6px; padding:4px 6px;" onfocus="this.style.borderColor='var(--sage-pale)'; this.style.background='var(--white)'" onblur="this.style.borderColor='transparent'; this.style.background='transparent'" />
+              <span class="mesa__cap">${ocupados}/${mesa.capacidad} <input type="number" min="1" max="12" value="${mesa.capacidad}" onchange="updateMesaCap(${mesa.id}, this.value)" title="Capacidad editable" /> <button onclick="deleteMesa(${mesa.id})" style="background:none; border:none; color:var(--sage-light); cursor:pointer; margin-left:4px;"><i class="fa-regular fa-trash-can"></i></button></span>
             </div>
-            ${pasesOcup > 0 ? `<p class="mesa__pases-label">${pasesOcup} pases ocupados en esta mesa</p>` : ''}
             <div class="mesa__body">
-              <div class="mesa__dropzone" ondragover="onMesaDragOver(event)"
-                   ondragleave="onMesaDragLeave(event)" ondrop="onMesaDrop(event,${mesa.id})">
-                <i class="fa-solid fa-arrow-down" style="margin-right:4px; opacity:0.5;"></i>
-                Arrastra aquí
+              <div class="mesa__dropzone" ondragover="onMesaDragOver(event)" ondragleave="onMesaDragLeave(event)" ondrop="onMesaDrop(event, ${mesa.id})">
+                <i class="fa-solid fa-arrow-down"></i> Arrastra confirmados aquí
               </div>
-              <ul class="mesa__lista">${invHtml}${vacHtml}</ul>
+              <ul class="mesa__lista">
+                ${invitadosHtml}
+                ${vaciosHtml}
+              </ul>
             </div>
-          </div>`;
+          </div>
+        `;
       }).join('');
     }
-
-    /* ══════════════════════════════
-       DRAG & DROP
-    ══════════════════════════════ */
     let draggedGuestId = null;
     function onGuestDragStart(e, guestId) {
       draggedGuestId = guestId;
       e.dataTransfer.effectAllowed = 'move';
       e.dataTransfer.setData('text/plain', String(guestId));
+      e.target.classList.add('dragging');
+      setTimeout(() => e.target.classList.remove('dragging'), 0);
     }
-    function onMesaDragOver(e) { e.preventDefault(); e.currentTarget.classList.add('drag-over'); e.dataTransfer.dropEffect = 'move'; }
-    function onMesaDragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
+    function onMesaDragOver(e) {
+      e.preventDefault();
+      e.currentTarget.classList.add('drag-over');
+      e.dataTransfer.dropEffect = 'move';
+    }
+    function onMesaDragLeave(e) {
+      e.currentTarget.classList.remove('drag-over');
+    }
     function onMesaDrop(e, mesaId) {
-      e.preventDefault(); e.currentTarget.classList.remove('drag-over');
+      e.preventDefault();
+      e.currentTarget.classList.remove('drag-over');
       const guestId = draggedGuestId || parseInt(e.dataTransfer.getData('text/plain'));
       if (!guestId) return;
       const guest = loadGuests().find(g => g.id === guestId);
-      if (!guest || guest.status !== 'si') { showToast('Solo confirmados pueden ir a una mesa', 'danger'); return; }
+      if (!guest || guest.status !== 'si') {
+        showToast('Solo confirmados pueden ir a mesa');
+        return;
+      }
       const mesas = loadMesas();
       const target = mesas.find(m => m.id === mesaId);
       if (!target) return;
-      if (target.invitados.includes(guestId)) { showToast('Ya está en esa mesa'); return; }
-      if (target.invitados.length >= target.capacidad) { showToast(`Mesa llena (${target.capacidad} lugares)`, 'danger'); return; }
+      if (target.invitados.includes(guestId)) {
+        showToast('Ya está en esa mesa');
+        return;
+      }
+      if (target.invitados.length >= target.capacidad) {
+        showToast(`Mesa llena (${target.capacidad} lugares)`);
+        return;
+      }
       mesas.forEach(m => m.invitados = m.invitados.filter(gid => gid !== guestId));
       target.invitados.push(guestId);
       saveMesas(mesas);
-      saveGuests(loadGuests().map(g => g.id === guestId ? { ...g, mesaId } : g));
-      renderMesas(); renderConfirmados();
-      showToast(`✓ ${guest.name} → ${target.nombre}`, 'success');
+      const guests = loadGuests().map(g => g.id === guestId ? { ...g, mesaId } : g);
+      saveGuests(guests);
+      renderMesas();
+      renderConfirmados();
+      showToast(`✓ ${guest.name} → ${target.nombre}`);
       draggedGuestId = null;
     }
 
     /* ══════════════════════════════
-       COPIAR / EXPORTAR
+       COPIAR LINK
     ══════════════════════════════ */
     function copyLink(btn, link) {
       navigator.clipboard.writeText(link).then(() => {
         btn.innerHTML = '<i class="fa-solid fa-check"></i>';
         btn.classList.add('copied');
-        setTimeout(() => { btn.innerHTML = '<i class="fa-regular fa-copy"></i>'; btn.classList.remove('copied'); }, 2000);
-        showToast('Link copiado', 'success');
+        setTimeout(() => {
+          btn.innerHTML = '<i class="fa-regular fa-copy"></i>';
+          btn.classList.remove('copied');
+        }, 2000);
+        showToast('¡Link copiado!');
       });
     }
+
+    /* ══════════════════════════════
+       COPIAR TODOS LOS LINKS
+    ══════════════════════════════ */
     function copyAllLinks() {
       const guests = loadGuests();
-      if (!guests.length) { showToast('No hay invitados aún', 'danger'); return; }
-      const text = guests.map(g => `${g.name} (${g.seats} pase${g.seats>1?'s':''})\n${buildLink(g)}`).join('\n\n');
-      navigator.clipboard.writeText(text).then(() => showToast(`✓ ${guests.length} links copiados`, 'success'));
+      if (!guests.length) { showToast('No hay invitados aún.'); return; }
+
+      const text = guests.map(g =>
+        `${g.name} (${g.seats} pase${g.seats > 1 ? 's' : ''})\n${buildLink(g)}`
+      ).join('\n\n');
+
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(`✓ ${guests.length} links copiados al portapapeles.`);
+      });
     }
+
+    /* ══════════════════════════════
+       EXPORTAR CSV
+    ══════════════════════════════ */
     function exportCSV() {
       const guests = loadGuests();
-      if (!guests.length) { showToast('No hay invitados para exportar', 'danger'); return; }
+      if (!guests.length) { showToast('No hay invitados para exportar.'); return; }
+
       const rows = [
-        ['#', 'Nombre', 'Nota', 'Pases', 'Estado', 'Mesa', 'Link', 'Fecha'],
-        ...guests.map((g, i) => {
-          const mesa = loadMesas().find(m => m.id === g.mesaId);
-          return [
-            i+1, `"${g.name}"`, `"${g.nota||''}"`, g.seats,
-            g.status==='si'?'Confirmado':g.status==='no'?'No asistirá':'Pendiente',
-            mesa ? `"${mesa.nombre}"` : '',
-            `"${buildLink(g)}"`,
-            new Date(g.createdAt).toLocaleDateString('es-SV')
-          ];
-        })
+        ['#', 'Nombre', 'Pases', 'Link', 'Fecha agregado'],
+        ...guests.map((g, i) => [
+          i + 1,
+          `"${g.name}"`,
+          g.seats,
+          `"${buildLink(g)}"`,
+          new Date(g.createdAt).toLocaleDateString('es-SV')
+        ])
       ];
-      const csv  = rows.map(r => r.join(',')).join('\n');
-      const blob = new Blob(['\ufeff'+csv], { type: 'text/csv;charset=utf-8;' });
+
+      const csv = rows.map(r => r.join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const url  = URL.createObjectURL(blob);
       const a    = document.createElement('a');
-      a.href = url; a.download = 'invitados-miguel-susana.csv'; a.click();
+      a.href     = url;
+      a.download = 'invitados-miguel-susana.csv';
+      a.click();
       URL.revokeObjectURL(url);
-      showToast('CSV exportado correctamente', 'success');
-    }
-    function clearAllData() {
-      if (!confirm('¿Estás seguro de que deseas eliminar TODOS los invitados y mesas? Esta acción no se puede deshacer.')) return;
-      localStorage.removeItem(STORAGE_KEY);
-      localStorage.removeItem(MESAS_KEY);
-      renderTable();
-      showToast('Todos los datos fueron eliminados');
+      showToast('CSV exportado correctamente.');
     }
 
     /* ══════════════════════════════
        TOAST
     ══════════════════════════════ */
     let toastTimer;
-    function showToast(msg, type = '') {
+    function showToast(msg) {
       const toast = document.getElementById('toast');
       toast.textContent = msg;
-      toast.className   = 'toast' + (type ? ' toast--'+type : '');
       toast.classList.add('show');
       clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
     }
 
     /* ══════════════════════════════
@@ -1297,8 +1119,10 @@
     ══════════════════════════════ */
     function escapeHtml(str) {
       return String(str)
-        .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-        .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
     }
   </script>
 
