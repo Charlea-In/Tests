@@ -874,7 +874,7 @@
     #ubicacion .ubicacion__map-wrap { margin-top: 4px; }
     .ubicacion__details { margin-top: 22px; }
     .ubicacion__actions { margin: 18px auto 0 !important; padding-bottom: 0 !important; }
-    #detalles { padding: 0 !important; padding-top: 0 !important; margin: 0 !important; border: none; }
+    #detalles { padding: 0 !important; padding-top: 28px !important; margin: 0 !important; border: none; }
     #detalles .section__inner { padding-top: 0 !important; margin-top: 0 !important; }
     #detalles h2:first-of-type { margin: 0 !important; padding: 0 !important; }
     .photo-duo { margin: 0 auto !important; }
@@ -1510,7 +1510,7 @@
         <img class="intro__photo" src="assets/intro-couple.png" alt="Miguel y Susana"
              onerror="this.onerror=null; this.src='assets/intro-couple.png'; this.style.aspectRatio='4/5'" />
         <div class="countdown__wrap">
-          <p class="countdown__heading">SOLO FALTA!</p>
+          <p class="countdown__heading">¡SOLO FALTAN!</p>
           <div class="intro__countdown" id="countdown">
             <div class="countdown__item"><span class="countdown__num" id="cdDays">--</span><span class="countdown__label">Días</span></div>
             <span class="countdown__sep">:</span>
@@ -1580,7 +1580,7 @@
   <section class="section section--texture ubicacion" id="ubicacion">
     <img src="assets/Rama-eucalipto.png" alt="" class="deco deco--ubicacion" aria-hidden="true" />
     <div class="section__inner reveal-group">
-      <h2 class="section-title typewriter-block reveal">Ubicación</h2>
+      <h2 class="section-title reveal">Ubicación</h2>
 <div class="ubicacion__map-wrap reveal">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3877.2580209677053!2d-89.19726242491174!3d13.64206248673844!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f63333218880b5b%3A0x3f49ea899a5b5d8e!2sLa%20Estancia%20en%20Los%20Planes!5e0!3m2!1ses-419!2ssv!4v1788496227321!5m2!1ses-419!2ssv" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
       </div>
@@ -1653,8 +1653,7 @@
   <section class="section section--texture details" id="detalles">
     <img src="assets/Rama-eucalipto-2.png" alt="" class="deco deco--detalles" aria-hidden="true" />
     <div class="section__inner reveal-group">
-      <h2 class="section-title typewriter-block reveal">Detalles<br>de la Boda</h2>
-      <h2 class="section-title reveal" style="margin-top: 40px;">Agenda de la Boda</h2>
+      <h2 class="section-title reveal">Detalles<br>de la Boda</h2>
       <img class="details__venue-illustration reveal"
            src="assets/venue-illustration.webp"
            alt="Ilustración del lugar de la celebración" />
@@ -2187,8 +2186,8 @@ END:VCALENDAR`;
       function next() { index = (index + 1) % total; update(); }
       function prev() { index = (index - 1 + total) % total; update(); }
 
-      let auto = setInterval(next, 10000);
-      function resetAuto() { clearInterval(auto); auto = setInterval(next, 10000); }
+      let auto = setInterval(next, 5000);
+      function resetAuto() { clearInterval(auto); auto = setInterval(next, 5000); }
 
       /* ── Touch — registrado en el wrapper para iOS ── */
       let startX = 0, startY = 0, locked = null;   /* locked: null | 'h' | 'v' */
