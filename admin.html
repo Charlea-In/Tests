@@ -774,8 +774,15 @@
     }
 
     function cloudCfg() {
+      // Lee el storage, pero si una clave falta usa lo visible en el campo.
+      // Así una config vieja/incompleta nunca apaga la nube en silencio.
       const c = loadConfig();
-      return { scriptUrl: (c.scriptUrl || '').trim(), apiKey: (c.apiKey || '').trim() };
+      const val = (id, v) => {
+        if ((v || '').trim()) return v.trim();
+        const el = document.getElementById(id);
+        return el ? (el.value || '').trim() : '';
+      };
+      return { scriptUrl: val('scriptUrl', c.scriptUrl), apiKey: val('apiKey', c.apiKey) };
     }
 
     async function apiGet(action, extra) {
@@ -927,8 +934,18 @@
       if (cfg.scriptUrl) document.getElementById('scriptUrl').value = cfg.scriptUrl;
       if (cfg.apiKey) document.getElementById('apiKey').value = cfg.apiKey;
       if (cfg.waTemplate) document.getElementById('waTemplate').value = cfg.waTemplate;
-      // Primera vez: guarda los valores por defecto (nube lista sin configurar)
-      if (!localStorage.getItem(CONFIG_KEY)) saveConfig();
+      // Repara storages viejos: si un campo visible tiene valor pero el
+      // storage no, persiste (primera vez y configs incompletas).
+      if (!localStorage.getItem(CONFIG_KEY)) {
+        saveConfig();
+      } else {
+        const st = loadConfig();
+        const needsHeal = ['baseUrl', 'scriptUrl', 'apiKey'].some(id => {
+          const el = document.getElementById(id);
+          return el && !(st[id] || '').trim() && el.value.trim();
+        });
+        if (needsHeal) saveConfig();
+      }
 
       // Enter en el input nombre
       document.getElementById('inputName').addEventListener('keydown', e => {
