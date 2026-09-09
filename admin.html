@@ -424,9 +424,6 @@
       <button class="nav-item active" data-filter="todos" onclick="goSection('todos', this)">
         <i class="fa-solid fa-users"></i>Invitados<span class="nav-badge" id="navTotal">0</span>
       </button>
-      <button class="nav-item" data-filter="si" onclick="goSection('si', this)">
-        <i class="fa-solid fa-circle-check"></i>Confirmados<span class="nav-badge" id="navConfirm">0</span>
-      </button>
       <button class="nav-item" data-filter="pendiente" onclick="goSection('pendiente', this)">
         <i class="fa-regular fa-clock"></i>Pendientes<span class="nav-badge" id="navPending">0</span>
       </button>
@@ -613,11 +610,16 @@
         </div>
       </div>
 
-      <!-- Confirmados -->
-      <div class="card" id="confirmadosCard">
+      <!-- Confirmaciones: confirmados (arrastrables a mesas) + respuestas RSVP -->
+      <div class="card" id="rsvpCard">
         <div class="card__header">
-          <span class="card__title">Confirmados</span>
-          <span class="card__meta">Arrastra hacia una mesa</span>
+          <span class="card__title">Confirmaciones</span>
+          <div class="mesas-toolbar">
+            <span class="card__meta">Arrastra hacia una mesa</span>
+            <button class="btn btn--outline btn--icon" onclick="loadRsvpLog()" title="Actualizar desde Sheets">
+              <i class="fa-solid fa-rotate"></i>
+            </button>
+          </div>
         </div>
         <div class="card__body">
           <div id="confirmadosList" class="confirmados-list"></div>
@@ -625,21 +627,10 @@
             <i class="fa-regular fa-circle-check"></i>
             <p>Nadie ha confirmado aún — cambia el estado en la tabla o espera RSVP</p>
           </div>
-        </div>
-      </div>
-
-      <!-- Confirmaciones (RSVP desde Google Sheets) -->
-      <div class="card" id="rsvpCard">
-        <div class="card__header">
-          <span class="card__title">Confirmaciones</span>
-          <div class="mesas-toolbar">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin:20px 0 6px;">
+            <span class="card__meta" style="font-weight:600; color:var(--ink);">Respuestas recibidas</span>
             <span class="card__meta" id="rsvpCount"></span>
-            <button class="btn btn--outline btn--icon" onclick="loadRsvpLog()" title="Actualizar desde Sheets">
-              <i class="fa-solid fa-rotate"></i>
-            </button>
           </div>
-        </div>
-        <div class="card__body">
           <div class="table-wrap">
             <table>
               <thead>
@@ -690,8 +681,9 @@
         <div class="card__body">
           <div class="form-group">
             <label for="baseUrl">URL base de la invitación</label>
-            <input type="text" id="baseUrl" value=https://charlea-in.github.io/Boda-Susana-Y-Miguel/
-                   placeholder"https://charlea-in.github.io/Boda-Susana-Y-Miguel/"
+            <input type="text" id="baseUrl"
+                   value="https://charlea-in.github.io/Boda-Susana-Y-Miguel/"
+                   placeholder="https://charlea-in.github.io/Boda-Susana-Y-Miguel/"
                    oninput="saveConfig(); renderTable()" />
           </div>
           <p class="hint">
@@ -709,13 +701,15 @@
           <div class="form-group" style="margin-top:14px;">
             <label for="scriptUrl">Google Apps Script URL (nube)</label>
             <input type="text" id="scriptUrl"
-                   placeholder="https://script.google.com/macros/s/AKfycbyLjtYTcJtdD7R2z5gdl990NKPSGKOeU-_A7A_FihZWJyhWdMp4cGxP6RhAicdQy3pxNw/exec"
+                   value="https://script.google.com/macros/s/AKfycbyLjtYTcJtdD7R2z5gdl990NKPSGKOeU-_A7A_FihZWJyhWdMp4cGxP6RhAicdQy3pxNw/exec"
+                   placeholder="https://script.google.com/macros/s/.../exec"
                    oninput="saveConfig(); pullStateSoon()" />
           </div>
           <div class="form-group" style="margin-top:14px;">
             <label for="apiKey">Clave compartida</label>
             <input type="text" id="apiKey"
-                   placeholder="susanaymiguel2026"
+                   value="susanaymiguel2026"
+                   placeholder="La misma del Code.gs"
                    oninput="saveConfig()" />
           </div>
           <p class="hint" id="cloudStatus">Modo local — pega el URL de Sheets para sincronizar.</p>
@@ -921,6 +915,8 @@
       if (cfg.scriptUrl) document.getElementById('scriptUrl').value = cfg.scriptUrl;
       if (cfg.apiKey) document.getElementById('apiKey').value = cfg.apiKey;
       if (cfg.waTemplate) document.getElementById('waTemplate').value = cfg.waTemplate;
+      // Primera vez: guarda los valores por defecto (nube lista sin configurar)
+      if (!localStorage.getItem(CONFIG_KEY)) saveConfig();
 
       // Enter en el input nombre
       document.getElementById('inputName').addEventListener('keydown', e => {
