@@ -210,27 +210,35 @@ function _saveRsvp(d) {
     Number(d.pases || 1)
   ]);
 
-  const gid = Number(d.guestId);
-  if (gid) {
-    const gsh = _sheet(SHEET_INVITADOS, HEAD_INV);
-    const n = gsh.getLastRow();
-    if (n > 1) {
-      const ids = gsh.getRange(2, 1, n - 1, 1).getValues();
-      for (let i = 0; i < ids.length; i++) {
-        if (Number(ids[i][0]) === gid) {
-          const row = i + 2;
-          const estado = d.asiste === 'si' ? 'si' : 'no';
-          gsh.getRange(row, 5).setValue(estado);
-          if (estado !== 'si') {
-            gsh.getRange(row, 6).setValue('');
-            _removeFromMesas(gid);
-          }
-          break;
-        }
+  const gid = Number(d.guestId) || 0;
+  _applyEstadoAlInvitado(gid, d.nombre, d.asiste);
+  return { ok: true };
+}
+
+/* Aplica el estado al invitado: primero por id, si no hay match
+   por nombre exacto (por si el link no traía id). */
+function _applyEstadoAlInvitado(gid, nombre, asiste) {
+  const gsh = _sheet(SHEET_INVITADOS, HEAD_INV);
+  const n = gsh.getLastRow();
+  if (n < 2) return false;
+  const ids = gsh.getRange(2, 1, n - 1, 1).getValues();
+  const names = gsh.getRange(2, 2, n - 1, 1).getValues();
+  const nm = String(nombre || '').trim().toLowerCase();
+  for (let i = 0; i < ids.length; i++) {
+    const idMatch = gid && Number(ids[i][0]) === gid;
+    const nameMatch = !idMatch && !!nm && String(names[i][0]).trim().toLowerCase() === nm;
+    if (idMatch || nameMatch) {
+      const row = i + 2;
+      const estado = asiste === 'si' ? 'si' : 'no';
+      gsh.getRange(row, 5).setValue(estado);
+      if (estado !== 'si') {
+        gsh.getRange(row, 6).setValue('');
+        _removeFromMesas(gid || Number(ids[i][0]));
       }
+      return true;
     }
   }
-  return { ok: true };
+  return false;
 }
 
 function _readRsvp() {

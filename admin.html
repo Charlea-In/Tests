@@ -616,7 +616,7 @@
           <span class="card__title">Confirmaciones</span>
           <div class="mesas-toolbar">
             <span class="card__meta">Arrastra hacia una mesa</span>
-            <button class="btn btn--outline btn--icon" onclick="loadRsvpLog()" title="Actualizar desde Sheets">
+            <button class="btn btn--outline btn--icon" onclick="pullState()" title="Actualizar todo desde Sheets">
               <i class="fa-solid fa-rotate"></i>
             </button>
           </div>
@@ -817,7 +817,9 @@
       }, 800);
     }
 
-    /* Baja invitados+mesas+RSVP desde Sheets (si hay nube). */
+    /* Baja invitados+mesas+RSVP desde Sheets (si hay nube).
+       Regla anti-borrado: si la hoja está vacía pero hay datos locales,
+       se SUBEN los locales en vez de borrarlos. */
     async function pullState() {
       if (!cloudCfg().scriptUrl) {
         setText('cloudStatus', 'Modo local — pega el URL de Sheets en Configuración.');
@@ -826,11 +828,21 @@
       try {
         const r = await apiGet('state');
         if (!r || !r.ok) throw new Error('pull');
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(r.guests || []));
-        localStorage.setItem(MESAS_KEY, JSON.stringify(r.mesas || []));
-        renderTable();
-        await loadRsvpLog();
-        setText('cloudStatus', '✓ Conectado a Google Sheets');
+        const cloudGuests = r.guests || [];
+        const cloudMesas = r.mesas || [];
+        const localGuests = loadGuests();
+        const localMesas = loadMesas();
+        if (!cloudGuests.length && !cloudMesas.length && (localGuests.length || localMesas.length)) {
+          await apiPost('saveState', { guests: localGuests, mesas: localMesas });
+          await loadRsvpLog();
+          setText('cloudStatus', '✓ Datos locales subidos a Google Sheets');
+        } else {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(cloudGuests));
+          localStorage.setItem(MESAS_KEY, JSON.stringify(cloudMesas));
+          renderTable();
+          await loadRsvpLog();
+          setText('cloudStatus', '✓ Conectado a Google Sheets');
+        }
       } catch (err) {
         setText('cloudStatus', 'Sin conexión — trabajando en local.');
       }
@@ -925,6 +937,11 @@
 
       renderTable();
       pullState();
+
+      // Auto-refresh cada 60s para ver RSVP y cambios de otros teléfonos
+      setInterval(() => {
+        if (cloudCfg().scriptUrl && !document.hidden) pullState();
+      }, 60000);
     });
 
     /* ══════════════════════════════
