@@ -1888,6 +1888,31 @@
       if (rsvpName) rsvpName.value = nombre;
     })();
 
+    /* ── RSVP → Google Sheets (opcional) ──
+       Pega el URL del Apps Script (Code.gs) y la clave para que las
+       respuestas lleguen a la hoja y se vean en el admin.
+       Si queda vacío, la confirmación solo muestra el mensaje local. */
+    const RSVP_ENDPOINT = '';
+    const RSVP_KEY = '';
+    function guestParams() {
+      const q = new URLSearchParams(window.location.search);
+      return {
+        guestId: q.get('id') || '',
+        nombre: q.get('invitado') || 'Invitado',
+        pases: parseInt(q.get('cantidad')) || 1
+      };
+    }
+    async function postRsvp(data) {
+      if (!RSVP_ENDPOINT) return;
+      try {
+        await fetch(RSVP_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify({ action: 'rsvp', key: RSVP_KEY, ...data })
+        });
+      } catch (e) { /* sin conexión: el mensaje local igual se muestra */ }
+    }
+
     /* ── RSVP Simple — Si / No ── */
     (function () {
       const btnSi = document.getElementById('btnSi');
@@ -1903,6 +1928,8 @@
         setTimeout(() => { msg.style.display = 'none'; }, 3000);
       }
       btnSi.addEventListener('click', () => {
+        const g = guestParams();
+        postRsvp({ guestId: g.guestId, nombre: g.nombre, pases: g.pases, asiste: 'si', comida: '' });
         showMsg('Gracias por ser parte de nuestra historia', true);
         btnSi.style.opacity = '0.6';
         btnNo.style.opacity = '0.6';
@@ -1910,11 +1937,32 @@
         btnNo.disabled = true;
       });
       btnNo.addEventListener('click', () => {
+        const g = guestParams();
+        postRsvp({ guestId: g.guestId, nombre: g.nombre, pases: g.pases, asiste: 'no', comida: '' });
         showMsg('Gracias por avisarnos. Lamentamos que no puedas acompañarnos.', false);
         btnSi.style.opacity = '0.6';
         btnNo.style.opacity = '0.6';
         btnSi.disabled = true;
         btnNo.disabled = true;
+      });
+    })();
+
+    /* ── RSVP Formulario (modal) — envía asistencia + comida ── */
+    (function () {
+      const form = document.getElementById('rsvpForm');
+      if (!form) return;
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const g = guestParams();
+        const checked = form.querySelector('input[name="attendance"]:checked');
+        const food = document.getElementById('rsvpFood');
+        postRsvp({
+          guestId: g.guestId, nombre: g.nombre, pases: g.pases,
+          asiste: checked ? checked.value : 'si',
+          comida: food ? food.value : ''
+        });
+        const m = document.getElementById('rsvpMsg');
+        if (m) { m.textContent = '¡Gracias! Tu respuesta fue registrada.'; m.style.display = 'block'; }
       });
     })();
 
