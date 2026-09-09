@@ -1327,12 +1327,13 @@
       showToast('Mesa eliminada');
     }
     /* Lugares ocupados de una mesa = suma de pases (no de invitados).
-       Ej: un invitado con 4 pases ocupa 4 lugares. */
+       Ej: un invitado con 4 pases ocupa 4 lugares.
+       Los ids que ya no existen (fantasmas) no cuentan. */
     function mesaOcupados(mesa, guests) {
       const all = guests || loadGuests();
       return mesa.invitados.reduce((s, gid) => {
         const g = all.find(x => x.id === gid);
-        return s + (g ? g.seats : 1);
+        return s + (g ? g.seats : 0);
       }, 0);
     }
     function updateMesaCap(id, cap) {
@@ -1364,6 +1365,13 @@
       const grid = document.getElementById('mesasGrid');
       const empty = document.getElementById('mesasEmpty');
       if (!grid || !empty) return;
+      // Auto-limpieza: saca ids fantasmas (invitado borrado en otro teléfono) y duplicados
+      let healed = false;
+      mesas.forEach(m => {
+        const clean = [...new Set(m.invitados.filter(gid => guests.some(g => g.id === gid)))];
+        if (clean.length !== m.invitados.length) { m.invitados = clean; healed = true; }
+      });
+      if (healed) saveMesas(mesas);
       setText('navMesas', mesas.length);
       if (mesas.length === 0) {
         grid.innerHTML = '';
